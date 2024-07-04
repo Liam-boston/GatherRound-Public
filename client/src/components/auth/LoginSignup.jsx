@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import './LoginSignup.css';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth, signOut } from 'firebase/auth';
 import { Navigate } from 'react-router-dom';
 
 const LoginSignup = () => {
@@ -63,6 +63,7 @@ const LoginSignup = () => {
                 console.log(userCredential); // Log the user credential on successful signup
                 setGoToEmailVerification(true);
                 sendEmailVerification(auth.currentUser);
+                signOut(auth)
             }).catch((error) => {
                 console.log(error); // Log any errors that occur during signup
             });

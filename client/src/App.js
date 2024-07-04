@@ -39,7 +39,7 @@ class App extends React.Component {
         <Router>
           <Routes>
             <Route exact path="/" element={<LoginSignup/>}/>
-            <Route path="EmailVerification" element={<PrivateRoute><EmailVerification/></PrivateRoute>}/>
+            <Route path="EmailVerification" element={<EmailVerification/>}/>
             <Route path="Homepage" element={<PrivateRoute><Homepage/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs" element={<PrivateRoute><Clubs/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/MemberList" element={<PrivateRoute><MemberList/></PrivateRoute>}/>
@@ -57,15 +57,15 @@ const PrivateRoute = ({children}) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const noUser = onAuthStateChanged(auth, (currentUser) => {
         console.log(currentUser);
         setUser(currentUser);
     });
     return () => {
-        unsubscribe();
+        noUser();
     }
   },[])
-  
+
     if (!user) {
       return <Navigate to="/"/>;
     } 

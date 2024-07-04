@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
+import ProfileButton from "../common/ProfileButton/ProfileButton";
 
 
 function MemberList() {
@@ -27,8 +28,14 @@ function MemberList() {
         fetchMembers();
     }, [])
 
+    // Function to handle profile button click
+    const handleProfileClick = () => {
+        // TODO: Implement profile button click logic
+    };
+
     return (
         <div>
+             <ProfileButton onClick={handleProfileClick} />
             <div className='header'>
                 <h1>Club Name</h1>
                 <p>List of members</p>
