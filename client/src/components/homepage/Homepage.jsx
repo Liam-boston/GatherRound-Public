@@ -7,12 +7,11 @@ import { auth } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from "../../services/firebase";
-import { useNavigate } from "react-router-dom"; 
 import { Navigate } from 'react-router-dom';
+import {Link} from "react-router-dom";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 
 function Homepage() {
-    const navigate = useNavigate();
     const [clubs, setClubs] = useState([]); // State to hold the list of clubs stored in Firestore
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
@@ -43,6 +42,7 @@ function Homepage() {
                     ...doc.data()
                 }));
                 setClubs(clubsList); // Update state with fetched clubs
+                console.log(clubs, clubsList)
             } catch (error) {
                 console.error("Error fetching clubs: ", error);
             }
@@ -93,9 +93,11 @@ function Homepage() {
             <div className='homepage-wrapper'>
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
-                    {clubs.map((club, index) => (
-                        <button onClick={(e) => navigate("Clubs")} key={index} className='club-button'>{club.name}
-                        </button>
+                    {clubs.map((club) => (
+                         <Link to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
+                         //Previous functionality
+                        //<button onClick={(e) => navigate('Clubs/${club}')} key={index} className='club-button'>{club.name}
+                        //</button>
                         // Mapping through tempClubList to create club buttons
                     ))}
                 </div>
