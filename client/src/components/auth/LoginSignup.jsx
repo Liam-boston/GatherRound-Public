@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './LoginSignup.css';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
-import { auth, db } from "../../services/firebase"
+import { db } from "../../services/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth } from 'firebase/auth';
 import { Navigate } from 'react-router-dom';
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from "firebase/firestore";
 
 const LoginSignup = () => {
     // State to control the current action ('active' for signup, '' for login)
@@ -71,7 +71,7 @@ const LoginSignup = () => {
             // Use Firebase authentication to create a new user with email and password
             createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
                 console.log(userCredential); // Log the user credential on successful signup
-                sendEmailVerification(auth.currentUser);
+                // Add user data to Firestore Users collection
                 try {
                     const userDoc = await setDoc(doc(db, 'Users', auth.currentUser.uid), {
                         name: name,
@@ -81,6 +81,7 @@ const LoginSignup = () => {
                 }catch(err){
                     console.log('Error adding user: ', err)
                 }
+                sendEmailVerification(auth.currentUser);
                 setGoToEmailVerification(true);
             }).catch((error) => {
                 console.log(error); // Log any errors that occur during signup
@@ -109,7 +110,7 @@ const LoginSignup = () => {
         } else {
             setEmailErrorMessage("");
         }
-    }, [email]);
+    }, [email, regExEmail]);
 
     // Validate password verification and update error message
     useEffect(() => {
@@ -119,7 +120,7 @@ const LoginSignup = () => {
         } else {
             setPasswordVerificationMessage("");
         }
-    }, [passwordVerification]);
+    }, [passwordVerification, password]);
 
     // Validate password format and update error message
     useEffect(() => {
@@ -129,7 +130,7 @@ const LoginSignup = () => {
         } else {
             setPasswordErrorMessage("");
         }
-    }, [password]);
+    }, [password, regExPassword]);
 
     // Check if all signup conditions are met
     useEffect(() => {
@@ -140,7 +141,7 @@ const LoginSignup = () => {
         ) {
             setValidSignup(true);
         }
-    }, [email, password, passwordVerification]);
+    }, [email, password, passwordVerification, regExEmail, regExPassword]);
 
 
     //Sends email verification and navigates user to email verification page
@@ -157,15 +158,15 @@ const LoginSignup = () => {
     return (
         <div className={`wrapper ${action}`}>
             {/* Login form */}
-            <div className='form-box login'>
+            <div className='form-box login' data-testid='login-el'>
                 <form onSubmit={login}>
                     <h1>Login</h1>
                     <div className='input-box'>
-                        <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} data-testid='login-email' required />
                         <FaEnvelope className='icon' />
                     </div>
                     <div className='input-box'>
-                        <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} data-testid='login-password' required />
                         <FaLock className='icon' />
                     </div>
                     <div className='forgot-password'>
