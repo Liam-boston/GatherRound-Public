@@ -1,15 +1,12 @@
-import "./Homepage.css"; 
-import CreateButton from "../common/CreateButton/CreateButton"; 
 import React, { useState, useEffect } from "react";
-import CreateClubModal from "./CreateClubModal";
-import { signOut } from 'firebase/auth';
-import { auth } from "../../services/firebase"
-import { getAuth } from 'firebase/auth';
+import { Navigate, useNavigate } from "react-router-dom"; 
+import { signOut, getAuth } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from "../../services/firebase";
-import { useNavigate } from "react-router-dom"; 
-import { Navigate } from 'react-router-dom';
+import { auth, db } from "../../services/firebase"
 import ProfileButton from "../common/ProfileButton/ProfileButton";
+import CreateButton from "../common/CreateButton/CreateButton"; 
+import CreateClubModal from "./CreateClubModal";
+import "./Homepage.css"; 
 
 function Homepage() {
     const navigate = useNavigate();
@@ -105,7 +102,7 @@ function Homepage() {
                         {message.text}
                     </div>
                 )}
-                <div className='create-club'>
+                <div>
                     {/* Create club button */}
                     <CreateButton onClick={viewModal} />
                 </div>
