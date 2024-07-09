@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { signOut, getAuth } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
 import { auth, db } from "../../services/firebase";
-import { Navigate } from 'react-router-dom';
 import {Link} from "react-router-dom";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import CreateButton from "../common/CreateButton/CreateButton"; 
