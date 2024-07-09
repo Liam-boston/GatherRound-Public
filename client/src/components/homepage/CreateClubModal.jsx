@@ -76,8 +76,8 @@ const CreateClubModal = ({ show, onClose, setMessage, currentUser }) => {
                         ></textarea>
                     </div>
                     <div className='create-club-modal__buttons'>
-                        <button className='create-club-modal__cancel' type='button' onClick={onClose}>Cancel</button>
-                        <button className='create-club-modal__submit' type='submit'>Create Club</button>
+                        <button data-testid="create-club-modal__cancel" className='create-club-modal__cancel' type='button' onClick={onClose}>Cancel</button>
+                        <button data-testid="create-club-modal__submit" className='create-club-modal__submit' type='submit'>Create Club</button>
                     </div>
                 </form>
             </div>
