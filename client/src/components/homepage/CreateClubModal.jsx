@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./CreateClubModal.css";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "../../services/firebase"
 
 const CreateClubModal = ({ show, onClose, setMessage, currentUser }) => {
@@ -16,16 +16,20 @@ const CreateClubModal = ({ show, onClose, setMessage, currentUser }) => {
             return;
         }
 
-        try {
-            // Add a new document to the Firestore collection
-            await addDoc(collection(db, "Clubs"), {
-                name: clubName,
-                description: clubDescription,
-                admin: [currentUser.uid], // Add the current user to the admin list
-                members: [], // Initialize an empty members list
-                createdAt: new Date() // Set the creation date
-            });
+        const data = {
+            name: clubName,
+            description: clubDescription,
+            admin: [currentUser.uid], // Add the current user to the admin list
+            members: [], // Initialize an empty members list
+            createdAt: new Date() // Set the creation date
+        }
+        const docRef = doc(db, "Clubs", clubName );
+        // Add a new document to the Firestore collection
+        
 
+        try {
+
+            await setDoc(docRef, data)
             // Clear both input fields
             setClubName("");
             setClubDescription("");

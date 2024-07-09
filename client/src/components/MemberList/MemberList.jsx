@@ -2,36 +2,60 @@ import "./MemberList.css";
 import React, {useState, useEffect} from 'react';
 //import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs } from "firebase/firestore";
+import { useParams } from 'react-router-dom';
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase"
+import { auth } from "../../services/firebase"
+import { getAuth } from 'firebase/auth';
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 
 
 function MemberList() {
 
     const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [member, setMember] = useState([]);
+    const { id } = useParams();
+    const docRef  = doc(db, "Clubs", id);
+
     
+        // Fetch the current user from Firebase Auth
+        useEffect(() => {
+            const auth = getAuth();
+            const unsubscribe = auth.onAuthStateChanged((user) => {
+                if (user) {
+                    setCurrentUser(user);
+                } else {
+                    setCurrentUser(null);
+                }
+            });
+    
+            // Clean up the subscription on unmount
+            return () => unsubscribe();
+        }, []);
+
+    // Fecth the members array form the current Club
     useEffect(()=>{
         const fetchMembers = async () => {
-       
-            await getDocs(collection(db, "Users"))
-                .then((querySnapshot)=>{               
-                    const newData = querySnapshot.docs
-                        .map((doc) => ({...doc.data(), id:doc.id }));
-                    setMember(newData);                
-                    console.log(member, newData);
-                })
-           
+            try {
+                await getDoc(docRef).then((docSnap)=> {
+                    const tempData = docSnap.get("members")
+                    setMember(tempData)
+                    console.log(member, tempData);
+                }) 
+            } catch(error) {
+                console.log(error)
+            }    
         }
-        
         fetchMembers();
-    }, [])
+    }, [currentUser])
+
 
     // Function to handle profile button click
     const handleProfileClick = () => {
         // TODO: Implement profile button click logic
     };
+
 
     return (
         <div>
@@ -45,8 +69,8 @@ function MemberList() {
                 {/* Main wrapper for the MemberList content */}
                 <div className='scrollable-list'>
                     {/* Scrollable list of members */}
-                    {member.map((member, index) => (
-                        <button onClick={(e) => null} key={index} className='member-button'>Name: {member.name} | Email: {member.email}
+                    {member.map((members, index) => (
+                        <button onClick={(e) => null} key={index} className='member-button'>Name: {members}
                         </button>
                     ))}
                 </div>
@@ -57,4 +81,6 @@ function MemberList() {
 }
 
 
+
 export default MemberList
+

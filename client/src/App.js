@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 import LoginSignup from './components/auth/LoginSignup'
 import EmailVerification from "./components/auth/EmailVerification";
 import Homepage from "./components/homepage/Homepage";
-import Clubs from "./components/clubs/Clubs";
+import ClubDetails from "./components/clubs/ClubDetails";
 import MemberList from "./components/MemberList/MemberList";
 import ActivityList from "./components/activityList/ActivityList";
 
@@ -41,9 +41,9 @@ class App extends React.Component {
             <Route exact path="/" element={<LoginSignup/>}/>
             <Route path="EmailVerification" element={<EmailVerification/>}/>
             <Route path="Homepage" element={<PrivateRoute><Homepage/></PrivateRoute>}/>
-            <Route path="/Homepage/Clubs" element={<PrivateRoute><Clubs/></PrivateRoute>}/>
-            <Route path="/Homepage/Clubs/MemberList" element={<PrivateRoute><MemberList/></PrivateRoute>}/>
-            <Route path="/Homepage/Clubs/ActivityList" element={<PrivateRoute><ActivityList/></PrivateRoute>}/>
+            <Route path="/Homepage/Clubs/:id" element={<PrivateRoute><ClubDetails/></PrivateRoute>}/>
+            <Route path="/Homepage/Clubs/:id/MemberList" element={<PrivateRoute><MemberList/></PrivateRoute>}/>
+            <Route path="/Homepage/Clubs/:id/ActivityList" element={<PrivateRoute><ActivityList/></PrivateRoute>}/>
             <Route path="*" element={<p>There's nothing here: 404!</p>} />
           </Routes>
         </Router>
