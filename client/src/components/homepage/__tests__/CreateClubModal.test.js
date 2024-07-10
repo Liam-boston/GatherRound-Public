@@ -1,56 +1,43 @@
-// import React from 'react';
-// import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-// import CreateClubModal from '../CreateClubModal';
-// import { collection, addDoc } from 'firebase/firestore';
-// import '@testing-library/jest-dom/extend-expect';
+import React, { act } from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import CreateClubModal from '../CreateClubModal';
+import { setDoc, doc, db } from 'firebase/firestore';
 
-// jest.mock('firebase/firestore', () => ({
-//   collection: jest.fn(),
-//   addDoc: jest.fn(),
-// }));
+// Command to run file
+// npx jest src/components/homepage/__tests__/CreateClubModal.test.js
 
-// describe('CreateClubModal Component', () => {
-//   const mockSetMessage = jest.fn();
-//   const mockOnClose = jest.fn();
-//   const mockCurrentUser = { uid: '123' };
+// Mock Firestore
+jest.mock('firebase/firestore', () => require('../../../../__mocks__/firebase'));
 
-//   it('should render the modal', () => {
-//     render(
-//       <CreateClubModal
-//         show={true}
-//         onClose={mockOnClose}
-//         setMessage={mockSetMessage}
-//         currentUser={mockCurrentUser}
-//       />
-//     );
+const mockUser = {
+    uid: '123',
+    email: 'john.doe@example.com'
+}
 
-//     expect(screen.getByText('Create a New Club')).toBeInTheDocument();
-//   });
+// UAT-13: CreateClubModal successfully adds a new club document to Firestore
+test('CreateClubModal successfully adds a new club document to Firestore', async () => {
+    render(<CreateClubModal show={true} onClose={() => { }} setMessage={() => { }} currentUser={{ uid: '123' }} />);
 
-//   it('should create a new club on form submission', async () => {
-//     addDoc.mockResolvedValueOnce({});
+    // Fill out the form fields
+    const clubNameInput = screen.getByPlaceholderText('Club Name');
+    fireEvent.change(clubNameInput, { target: { value: 'Testing...anybody there?' } });
 
-//     render(
-//       <CreateClubModal
-//         show={true}
-//         onClose={mockOnClose}
-//         setMessage={mockSetMessage}
-//         currentUser={mockCurrentUser}
-//       />
-//     );
+    const descriptionInput = screen.getByPlaceholderText('Description');
+    fireEvent.change(descriptionInput, { target: { value: 'Yeah John we can hear you.' } });
 
-//     fireEvent.change(screen.getByPlaceholderText('Club Name'), { target: { value: 'Test Club' } });
-//     fireEvent.change(screen.getByPlaceholderText('Description'), { target: { value: 'Test Description' } });
+    // Submit the form
+    const createButton = screen.getByTestId('create-club-modal__submit');
 
-//     fireEvent.click(screen.getByText('Create Club'));
+    act(() => {
+        fireEvent.click(createButton);
+    });
 
-//     await waitFor(() => expect(addDoc).toHaveBeenCalled());
-
-//     expect(mockSetMessage).toHaveBeenCalledWith({
-//       type: 'success',
-//       text: 'Successfully created Test Club!',
-//     });
-
-//     expect(mockOnClose).toHaveBeenCalled();
-//   });
-// });
+    // Assert that setDoc was called with the correct arguments
+    expect(setDoc).toHaveBeenCalledWith(doc(db, 'Clubs', 'Testing...anybody there?'), {
+        name: 'Testing...anybody there?',
+        description: 'Yeah John we can hear you.',
+        admin: ['123'],
+        members: [],
+        createdAt: expect.any(Date),
+    });
+});
