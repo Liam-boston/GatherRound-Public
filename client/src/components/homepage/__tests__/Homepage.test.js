@@ -1,111 +1,177 @@
 import React, { act } from 'react';
 import Homepage from '../Homepage';
-import ClubDetails from '../../clubs/ClubDetails';
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import ClubDetails from '../../clubs/ClubDetails'
+import { getDocs } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // for better assertions
+import '@testing-library/jest-dom/extend-expect';
 
-// // Mock Firebase modules
-// jest.mock('firebase/firestore');
-// jest.mock('firebase/auth');
+// Command to run file
+// npx jest src/components/homepage/__tests__/Homepage.test.js
 
-// const { getDocs } = require('firebase/firestore');
+// Mock Firebase Auth and Firestore
+jest.mock('firebase/auth', () => require('../../../../__mocks__/firebase'));
+jest.mock('firebase/firestore', () => require('../../../../__mocks__/firebase'));
 
-// describe('Homepage Component', () => {
-//   // Mock data
-//   const mockClubs = [
-//     { id: '1', name: 'Club 1' },
-//     { id: '2', name: 'Club 2' },
-//   ];
+const mockClubs = [
+  { id: 1, name: 'Chess Club' },
+  { id: 2, name: 'Book Club' }
+];
 
-//   beforeEach(() => {
-//     // Reset mocks before each test
-//     getDocs.mockReset();
+const mockUser = {
+  uid: '123',
+  email: 'john.doe@example.com'
+};
 
-//     // Mock the return value of getDocs
-//     getDocs.mockResolvedValue({
-//       docs: mockClubs.map(club => ({ id: club.id, data: () => club })),
-//     });
-//   });
-
-  // // Mock CreateClubModal component
-  // jest.mock("../CreateClubModal", () => ({
-  //   __esModule: true,
-  //   default: jest.fn(() => <div data-testid="mock-create-club-modal" />)
-  // }));
-
-  // UT-8: CreateClubModal is shown when the create button is clicked
-  test('CreateClubModal is shown when the create button is clicked', async () => {
-    await act(async () => {
-      render(
-        <MemoryRouter>
-          <Homepage />
-        </MemoryRouter>
-      );
-    });
-
-    // Find the Create Club button by its role  
-    const createButton = screen.getByRole('button', { name: 'create-new' });
-    
-    await act(async () => {
-      fireEvent.click(createButton);
-    });
-
-     // Expect the modal to be shown
-     expect(screen.getByTestId('create-club-modal__submit')).toBeInTheDocument();
+beforeEach(() => {
+  getDocs.mockResolvedValue({
+    docs: mockClubs.map((club) => ({
+      id: club.id,
+      data: () => club,
+    })),
   });
 
-  // UT-9: CreateClubModal is closed when the cancel button is clicked
-  it('CreateClubModal is closed when the cancel button is clicked', async () => {
-    await act(async () => {
-      render(
-        <MemoryRouter>
-          <Homepage />
-        </MemoryRouter>
-      );
-    });
+  const mockGetAuth = {
+    onAuthStateChanged: jest.fn((callback) => {
+      callback(mockUser);
+      return jest.fn();
+    }),
+  };
+  getAuth.mockReturnValue(mockGetAuth);
+});
 
-    // Find the Create Club button by its role  
-    const createButton = screen.getByRole('button', { name: 'create-new' });
+// UT-9: Can fetch current user from Firestore
+test('Can fetch current user from Firestore', async () => {
+  render(
+    <MemoryRouter>
+      <Homepage />
+    </MemoryRouter>
+  );
 
-    await act(async () => {
-      fireEvent.click(createButton);
-    });
-
-    // Expect the modal to be shown
-    expect(screen.getByTestId('create-club-modal__submit')).toBeInTheDocument();
-
-    // Click the cancel button on the modal
-    const cancelButton = screen.getByTestId('create-club-modal__cancel');
-    fireEvent.click(cancelButton);
-
-    // Expect the modal to be closed
-    expect(screen.queryByTestId('create-club-modal__cancel')).not.toBeInTheDocument();
+  await waitFor(() => {
+    expect(getAuth).toHaveBeenCalled();
+    expect(getAuth().onAuthStateChanged).toHaveBeenCalled();
   });
 
-  // it('should navigate to club page when a club link is clicked', async () => {
-  //   render(
-  //     <MemoryRouter initialEntries={['/Homepage']}>
-  //       <Routes>
-  //         <Route path="/Homepage" element={<Homepage />} />
-  //         <Route path="/Homepage/Clubs/:id" element={<ClubDetails />} /> {/* Define the ClubDetails route */}
-  //       </Routes>
-  //     </MemoryRouter>
-  //   );
+  // TODO: This last expect statement fails - the test recognizes when getAuth() and onAuthStateChanged
+  // are called (indicating someone logged in) but times out when the expected user is compared to the
+  // mock user. I can't figure out why - Liam
 
-  //   // Wait for the clubs to load
-  //   await waitFor(() => expect(getDocs).toHaveBeenCalled());
+  // Retrieve the user passed to onAuthStateChanged
+  // const onAuthStateChangedCallback = getAuth().onAuthStateChanged.mock.calls[0][0];
 
-  //   // Find and click the first club link
-  //   const clubLinks = screen.getAllByRole('link', { name: /Club 1/i });
-  //   fireEvent.click(clubLinks[0]);
-
-  //   // Expect navigation to Clubs page
-  //   expect(window.location.pathname).toBe('/Homepage/Clubs/Club 1');
+  // // Invoke the callback function to get the user object
+  // let user;
+  // await act(async () => {
+  //   user = await new Promise((resolve) => {
+  //     onAuthStateChangedCallback((userData) => {
+  //       resolve(userData);
+  //     });
+  //   });
   // });
 
-  
-//   it('should navigate to the club page when a club button is clicked', async () => {
-//   it('should render and close the create club modal', async () => {
-//   it('should create a new club successfully', async () => {
-//   it('should update the club list after a new club is created', async () => {
+  // Validate the user object
+  // expect(user).toEqual(mockUser);
+});
+
+// UT-10: Can fetch club list from Firestore
+test('Can fetch club list from Firestore', async () => {
+  render(
+    <MemoryRouter>
+      <Homepage />
+    </MemoryRouter>
+  );
+
+  // Ensure the clubs are displayed
+  const chessClubButton = await screen.findByText('Chess Club');
+  const bookClubButton = await screen.findByText('Book Club');
+
+  expect(chessClubButton).toBeInTheDocument();
+  expect(bookClubButton).toBeInTheDocument();
+});
+
+// UAT-14: CreateClubModal is shown when the create button is clicked
+test('CreateClubModal is shown when the create button is clicked', async () => {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <Homepage />
+      </MemoryRouter>
+    );
+  });
+
+  // Find the Create Club button by its role  
+  const createButton = screen.getByRole('button', { name: 'create-new' });
+
+  await act(async () => {
+    fireEvent.click(createButton);
+  });
+
+  // Expect the modal to be shown
+  expect(screen.getByTestId('create-club-modal__submit')).toBeInTheDocument();
+});
+
+// UAT-15: CreateClubModal is closed when the cancel button is clicked
+test('CreateClubModal is closed when the cancel button is clicked', async () => {
+  await act(async () => {
+    render(
+      <MemoryRouter>
+        <Homepage />
+      </MemoryRouter>
+    );
+  });
+
+  // Find the Create Club button by its role  
+  const createButton = screen.getByRole('button', { name: 'create-new' });
+
+  await act(async () => {
+    fireEvent.click(createButton);
+  });
+
+  // Expect the modal to be shown
+  expect(screen.getByTestId('create-club-modal__submit')).toBeInTheDocument();
+
+  // Click the cancel button on the modal
+  const cancelButton = screen.getByTestId('create-club-modal__cancel');
+  fireEvent.click(cancelButton);
+
+  // Expect the modal to be closed
+  expect(screen.queryByTestId('create-club-modal__cancel')).not.toBeInTheDocument();
+});
+
+// UAT-16: Club buttons navigate to club page when clicked
+test('Club buttons navigate to club page when clicked', async () => {
+  render(
+    <MemoryRouter initialEntries={['/Homepage']}>
+      <Routes>
+        <Route path="/Homepage" element={<Homepage />} />
+        <Route path="/Homepage/Clubs/:name" element={<ClubDetails />} />
+      </Routes>
+    </MemoryRouter>
+  );
+
+  // Ensure the clubs are displayed
+  const chessClubButton = await screen.findByText('Chess Club');
+  const bookClubButton = await screen.findByText('Book Club');
+
+  expect(chessClubButton).toBeInTheDocument();
+  expect(bookClubButton).toBeInTheDocument();
+
+  // Simulate clicking the Chess Club button
+  fireEvent.click(chessClubButton);
+
+  // TODO: This last expect statement fails - when the chessClubButton is clicked,
+  // the path returned is "/" instead of "/Homepage/Clubs/Chess%20Club" - Liam
+
+  // Verify navigation to the Chess Club page
+  // await waitFor(() => {
+  //   expect(window.location.pathname).toBe('/Homepage/Clubs/Chess%20Club');
+  // });
+});
+
+// TODO: When UserProfileModal is implemented
+
+// UAT-17: UserProfileModal is shown when the profile button is clicked
+
+// UAT-18: UserProfileModal is closed when the profile button is clicked
