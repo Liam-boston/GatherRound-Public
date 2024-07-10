@@ -40,7 +40,6 @@ function Homepage() {
                     ...doc.data()
                 }));
                 setClubs(clubsList); // Update state with fetched clubs
-                console.log(clubs, clubsList)
             } catch (error) {
                 console.error("Error fetching clubs: ", error);
             }
