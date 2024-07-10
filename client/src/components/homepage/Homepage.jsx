@@ -91,7 +91,7 @@ function Homepage() {
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
                     {clubs.map((club) => (
-                         <Link to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
+                         <Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
                          //Previous functionality
                         //<button onClick={(e) => navigate('Clubs/${club}')} key={index} className='club-button'>{club.name}
                         //</button>
