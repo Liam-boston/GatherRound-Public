@@ -7,7 +7,7 @@ let name;
 let email;
 
 beforeEach(() => {
-    render(<UserProfileModal name='John Smith' email='test@mail.com'/>);
+    render(<UserProfileModal show={true} onClose={console.log('close')} userId={'HvWyEVnFIYPO9Fg0RXSitouINAS2'}/>);
     modal = screen.getByTestId('modal');
     name = screen.getByTestId('name');
     email = screen.getByTestId('email');
