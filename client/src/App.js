@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginSignup from './components/auth/LoginSignup'
 import EmailVerification from "./components/auth/EmailVerification";
 import Homepage from "./components/homepage/Homepage";
+import UserProfileModal from './components/common/UserProfileModal';
 
 class App extends React.Component {
 
@@ -34,6 +35,7 @@ class App extends React.Component {
             <Route path="/" element={<LoginSignup/>}/>
             <Route path="EmailVerification" element={<EmailVerification/>}/>
             <Route path="Homepage" element={<Homepage/>}/>
+            <Route path="TestUserProfileModal" element={<UserProfileModal show={true} onClose={console.log('close')} userId='HvWyEVnFIYPO9Fg0RXSitouINAS2' />} />
           </Routes>
         </Router>
       </div>
