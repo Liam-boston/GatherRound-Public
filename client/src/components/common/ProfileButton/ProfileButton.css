@@ -1,0 +1,23 @@
+.profile-button {
+    background-color: #186e3c; /* Green background color */
+    color: white; /* White text color */
+    padding: 12px; /* Adjust padding for larger size */
+    border: none; /* Remove default border */
+    border-radius: 50%; /* Round shape */
+    padding: 10px; /* Adjust padding */
+    cursor: pointer; /* Show pointer cursor on hover */
+    position: fixed; /* Position fixed for top right corner */
+    top: 20px; /* Adjust top position */
+    right: 20px; /* Adjust right position */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow for depth */
+}
+
+.profile-button:hover {
+    background-color: #145a30; /* Darker green on hover */
+}
+
+.profile-icon {
+    width: 20px; /* Adjust icon size */
+    height: 20px; /* Adjust icon size */
+    vertical-align: middle; /* Align icon vertically */
+}

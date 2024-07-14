@@ -11,7 +11,7 @@
     flex-direction: column; /* Stack form-boxes vertically */
     align-items: center;
     justify-content: center;
-    margin-top: 150px; /* Shift down into the center */
+    margin-top: 30px; /* Shift down into the center */
     padding: 20px; /* Add some padding for aesthetics */
 }
 

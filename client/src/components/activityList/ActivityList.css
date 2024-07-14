@@ -47,6 +47,23 @@
     margin-top: 15px;
 }
 
+.message {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message.success {
+    color: #186e3c; /* Green color */
+    background-color: #d4edda; /* Light green background */
+}
+
+.message.error {
+    color: #d9534f; /* Red color */
+    background-color: #f8d7da; /* Light red background */
+}
+
 .activity-button {
     background-color: #d3d3d3; /* Light gray color */
     border: none;
