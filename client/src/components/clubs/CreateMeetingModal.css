@@ -1,0 +1,74 @@
+.create-activity-modal__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.create-activity-modal__content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-activity-modal__input-box {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.create-activity-modal__input-box input,
+.create-activity-modal__input-box textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-activity-modal__input-box textarea {
+    height: calc(1em + 16px + 32px); /* Adjust height to be one line taller */
+}
+
+.create-activity-modal__buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px; /* Space between the buttons */
+    margin-top: 10px;
+}
+
+.create-activity-modal__submit,
+.create-activity-modal__cancel {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* Set border-radius to 20px for both buttons */
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.create-activity-modal__submit {
+    background-color: #186e3c;
+    color: #fff;
+}
+
+.create-activity-modal__submit:hover {
+    background-color: #145a30; /* Darker green on hover */
+}
+
+.create-activity-modal__cancel {
+    background-color: #d3d3d3; /* Light gray color */
+    color: #186e3c; /* Darker green color */
+}
+
+.create-activity-modal__cancel:hover {
+    background-color: #b0b0b0; /* Darker gray on hover */
+    color: #186e3c; /* Darker green color */
+}

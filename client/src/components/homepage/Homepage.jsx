@@ -115,9 +115,6 @@ function Homepage() {
                     {/* Scrollable list of club buttons */}
                     {clubs.map((club) => (
                          <Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
-                         //Previous functionality
-                        //<button onClick={(e) => navigate('Clubs/${club}')} key={index} className='club-button'>{club.name}
-                        //</button>
                     ))}
                 </div>
                 {/* Display the success or failure message upon club creation */}
