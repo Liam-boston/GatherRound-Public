@@ -19,3 +19,44 @@
     max-width: 90%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.user-profile-modal__buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px; /* Space between the buttons */
+    margin-top: 10px;
+}
+
+.user-profile-modal__close,
+.user-profile-modal__logout {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* Set border-radius to 20px for both buttons */
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.user-profile-modal__logout {
+    background-color: #186e3c;
+    color: #fff;
+}
+
+.user-profile-modal__logout:hover {
+    background-color: #145a30; /* Darker green on hover */
+}
+
+.user-profile-modal__close {
+    background-color: #d3d3d3; /* Light gray color */
+    color: #186e3c; /* Darker green color */
+}
+
+.user-profile-modal__close:hover {
+    background-color: #b0b0b0; /* Darker gray on hover */
+    color: #186e3c; /* Darker green color */
+}
+
+.user-profile-modal__info p {
+    color: #000;
+    text-align: left;
+}

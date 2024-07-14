@@ -9,13 +9,13 @@ const mockUser = {
 };
 
 test('should render modal', () => {
-    const {getByTestId} = render(<UserProfileModal show={true} onClose={console.log('close')} currentUser={mockUser} />);
+    const {getByTestId} = render(<UserProfileModal show={true} onClose={console.log('close')} userData={mockUser} />);
 
     expect(getByTestId('modal')).toBeInTheDocument();
 });
 
 test('should render user data', () => {
-    const component = render(<UserProfileModal show={true} onClose={console.log('close')} currentUser={mockUser} />);
+    const component = render(<UserProfileModal show={true} onClose={console.log('close')} userData={mockUser} />);
 
     const name = component.getByTestId('name');
     const email = component.getByTestId('email');
@@ -26,7 +26,7 @@ test('should render user data', () => {
 
 test('should log out', () => {
     let message = '';
-    const {getByTestId} = render(<UserProfileModal show={true} onClose={()=>{}} logOut={() => {message='logOut success'}} currentUser={mockUser} />);
+    const {getByTestId} = render(<UserProfileModal show={true} logOut={() => {message='logOut success'}} userData={mockUser} />);
 
     act(() => {
         fireEvent.click(getByTestId('logOut'));
@@ -36,12 +36,11 @@ test('should log out', () => {
 });
 
 test('should close', () => {
-    let message = '';
-    const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {message = 'close success'}} logOut={()=>{}} currentUser={mockUser} />);
+    const {getByTestId} = render(<UserProfileModal show={true} logOut={()=>{}} userData={mockUser} />);
 
     act(() => {
         fireEvent.click(getByTestId('close'));
     })
 
-    expect(message).toBe('close success');    
+    expect(getByTestId(modal)).not.toBeInTheDocument();   
 });

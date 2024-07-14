@@ -10,7 +10,6 @@ import Homepage from "./components/homepage/Homepage";
 import ClubDetails from "./components/clubs/ClubDetails";
 import MemberList from "./components/MemberList/MemberList";
 import ActivityList from "./components/activityList/ActivityList";
-import Homepage from "./components/homepage/Homepage";
 import UserProfileModal from './components/common/UserProfileModal';
 
 class App extends React.Component {
@@ -48,7 +47,6 @@ class App extends React.Component {
             <Route path="/Homepage/Clubs/:id/ActivityList" element={<PrivateRoute><ActivityList/></PrivateRoute>}/>
             <Route path="*" element={<p>There's nothing here: 404!</p>} />
             <Route path="Homepage" element={<Homepage/>}/>
-            <Route path="TestUserProfileModal" element={<UserProfileModal show={true} onClose={console.log('close')} userId='HvWyEVnFIYPO9Fg0RXSitouINAS2' />} />
           </Routes>
         </Router>
       </div>
