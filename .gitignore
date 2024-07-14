@@ -11,6 +11,11 @@ node_modules/
 # testing
 /coverage
 
+# Ignore Firebase emulator logs
+client/database-debug.log
+client/firestore-debug.log
+client/ui-debug.log
+
 # production
 /build
 

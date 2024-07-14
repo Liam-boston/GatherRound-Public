@@ -1,15 +1,13 @@
-import "./Homepage.css"; 
-import CreateButton from "../common/CreateButton/CreateButton"; 
 import React, { useState, useEffect } from "react";
-import CreateClubModal from "./CreateClubModal";
-import { signOut } from 'firebase/auth';
-import { auth } from "../../services/firebase"
-import { getAuth } from 'firebase/auth';
+import { Navigate, useNavigate } from "react-router-dom"; 
+import { signOut, getAuth } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from "../../services/firebase";
-import { Navigate } from 'react-router-dom';
+import { auth, db } from "../../services/firebase";
 import {Link} from "react-router-dom";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
+import CreateButton from "../common/CreateButton/CreateButton"; 
+import CreateClubModal from "./CreateClubModal";
+import "./Homepage.css"; 
 
 function Homepage() {
     const [clubs, setClubs] = useState([]); // State to hold the list of clubs stored in Firestore
@@ -42,7 +40,6 @@ function Homepage() {
                     ...doc.data()
                 }));
                 setClubs(clubsList); // Update state with fetched clubs
-                console.log(clubs, clubsList)
             } catch (error) {
                 console.error("Error fetching clubs: ", error);
             }
@@ -62,11 +59,11 @@ function Homepage() {
         setShowModal(false); // Close the modal
     }
 
+    // Function to sign authenticated user out
     const logOut = () => {
          signOut(auth)
          return <Navigate to="/"/>;
     }
-
 
     // Function to set the success or failure message
     const handleSetMessage = (newMessage) => {
@@ -78,9 +75,8 @@ function Homepage() {
 
     // Function to handle profile button click
     const handleProfileClick = () => {
-        // TODO: Implement profile button click logic
+        // TODO: Implement profile button
     };
-
 
     return (
         <div>
@@ -94,7 +90,7 @@ function Homepage() {
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
                     {clubs.map((club) => (
-                         <Link to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
+                         <Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
                     ))}
                 </div>
                 {/* Display the success or failure message upon club creation */}
@@ -103,7 +99,7 @@ function Homepage() {
                         {message.text}
                     </div>
                 )}
-                <div className='create-club'>
+                <div>
                     {/* Create club button */}
                     <CreateButton onClick={viewModal} />
                 </div>
