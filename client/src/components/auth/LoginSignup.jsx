@@ -1,9 +1,10 @@
-import React, { useState, useEffect} from 'react';
-import './LoginSignup.css';
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { auth, db } from "../../services/firebase"
+import { doc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth, signOut } from 'firebase/auth';
 import { Navigate } from 'react-router-dom';
-import { doc, setDoc } from "firebase/firestore";
+import './LoginSignup.css';
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const LoginSignup = () => {
     // State to control the current action ('active' for signup, '' for login)
