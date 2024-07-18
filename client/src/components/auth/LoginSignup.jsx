@@ -168,7 +168,7 @@ const LoginSignup = () => {
                         <p><a href="">Forgot password?</a></p>
                     </div>
 
-                    <button type="submit">Login</button>
+                    <button type="submit" data-testid='login-submit'>Login</button>
 
                     <div className='signup-option'>
                         <button className='sign-up' type="button" onClick={signupSwitch} data-testid='signup-switch'>Sign Up</button>

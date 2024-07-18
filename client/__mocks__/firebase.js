@@ -12,3 +12,8 @@ export const collection = jest.fn();
 export const getDocs = jest.fn();
 export const setDoc = jest.fn();
 export const doc = jest.fn();
+export const createUserWithEmailAndPassword = jest.fn().mockResolvedValue({
+  uid: 'fakeUserID',
+  email: 'test@mail.com'
+});
+export const signInWithEmailAndPassword = jest.fn().mockResolvedValue({});

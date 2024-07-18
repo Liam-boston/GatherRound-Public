@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import './UserProfileModal.css';
 import { CgProfile } from 'react-icons/cg';
@@ -31,7 +32,7 @@ const UserProfileModal = ({show, onClose, logOut, userData}) => {
                     <p data-testid='email'>{'Email: ' + email} </p>
                  </div>
                  <div className='user-profile-modal__buttons'>
-                    <button className='user-profile-modal__close' type='button' onClick={onClose}>Close</button>
+                    <button className='user-profile-modal__close' type='button' onClick={onClose} data-testid='close'>Close</button>
                     <button className='user-profile-modal__logout' data-testid='logOut' onClick={logOut}> Logout </button>
                 </div>
             </div>

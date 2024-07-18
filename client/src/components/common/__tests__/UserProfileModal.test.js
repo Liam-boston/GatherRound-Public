@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import UserProfileModal from '../UserProfileModal';
 import '@testing-library/jest-dom/extend-expect';
@@ -8,14 +9,27 @@ const mockUser = {
     email: 'test@mail.com'
 };
 
-test('should render modal', () => {
-    const {getByTestId} = render(<UserProfileModal show={true} onClose={console.log('close')} userData={mockUser} />);
+test('should render modal if `show` is true', () => {
+    const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {}} userData={mockUser} />);
 
     expect(getByTestId('modal')).toBeInTheDocument();
 });
 
+test('should not render modal if `show` is false', () => {
+    const {getByTestId} = render(<UserProfileModal show={false} onClose={() => {}} logOut={() => {}} userData={mockUser} />);
+
+    let modal;
+    try{
+        modal = getByTestId('modal');
+    }catch(e){
+        modal = null;
+    }
+
+    expect(modal).toBe(null);
+});
+
 test('should render user data', () => {
-    const component = render(<UserProfileModal show={true} onClose={console.log('close')} userData={mockUser} />);
+    const component = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {}} userData={mockUser} />);
 
     const name = component.getByTestId('name');
     const email = component.getByTestId('email');
@@ -24,23 +38,26 @@ test('should render user data', () => {
     expect(email.textContent).toBe('Email: test@mail.com ');
 }); 
 
-test('should log out', () => {
+test('should call log out', () => {
     let message = '';
-    const {getByTestId} = render(<UserProfileModal show={true} logOut={() => {message='logOut success'}} userData={mockUser} />);
+    const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {message='logOut clicked'}} userData={mockUser} />);
 
     act(() => {
         fireEvent.click(getByTestId('logOut'));
     });
 
-    expect(message).toBe('logOut success')
+    expect(message).toBe('logOut clicked')
 });
 
-test('should close', () => {
-    const {getByTestId} = render(<UserProfileModal show={true} logOut={()=>{}} userData={mockUser} />);
+test('should call close', () => {
+    let message = '';
+
+    const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {message='close clicked'}} logOut={()=>{}} userData={mockUser} />);
+  
 
     act(() => {
         fireEvent.click(getByTestId('close'));
-    })
+    });
 
-    expect(getByTestId(modal)).not.toBeInTheDocument();   
+    expect(message).toBe('close clicked');
 });
