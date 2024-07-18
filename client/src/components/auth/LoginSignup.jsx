@@ -67,7 +67,8 @@ const LoginSignup = () => {
                 try {
                     const userDoc = await setDoc(doc(db, 'Users', auth.currentUser.uid), {
                         name: name,
-                        email: email
+                        email: email,
+                        id: auth.currentUser.uid
                     });
                     console.log('New user added with ID: ', userDoc.id);
                 }catch(err){

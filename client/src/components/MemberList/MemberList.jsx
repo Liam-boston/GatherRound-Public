@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 //import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { auth } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
@@ -16,9 +16,8 @@ function MemberList() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [member, setMember] = useState([]);
     const { id } = useParams();
-    const docRef  = doc(db, "Clubs", id);
+    const docRefMembers  = doc(db, "Clubs", id);
 
-    
         // Fetch the current user from Firebase Auth
         useEffect(() => {
             const auth = getAuth();
@@ -33,12 +32,13 @@ function MemberList() {
             // Clean up the subscription on unmount
             return () => unsubscribe();
         }, []);
+        
 
-    // Fecth the members array form the current Club
+    // Fetch the members array form the current Club
     useEffect(()=>{
         const fetchMembers = async () => {
             try {
-                await getDoc(docRef).then((docSnap)=> {
+                await getDoc(docRefMembers).then((docSnap)=> {
                     const tempData = docSnap.get("members")
                     setMember(tempData)
                     console.log(member, tempData);
