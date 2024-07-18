@@ -75,7 +75,6 @@ const LoginSignup = () => {
                 }
                 sendEmailVerification(auth.currentUser);
                 setGoToEmailVerification(true);
-                sendEmailVerification(auth.currentUser);
                 signOut(auth)
             }).catch((error) => {
                 console.log(error); // Log any errors that occur during signup
