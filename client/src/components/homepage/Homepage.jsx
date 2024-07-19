@@ -75,7 +75,7 @@ function Homepage() {
                 });
             })
             .catch(err => {
-                setMessage(err.message);
+                console.log(err.message, err)
             });
         }
 

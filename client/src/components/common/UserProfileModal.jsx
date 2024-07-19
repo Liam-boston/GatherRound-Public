@@ -9,6 +9,7 @@ const UserProfileModal = ({show, onClose, logOut, userData}) => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
 
+    // Fetch user data
     useEffect(() => {
         if(!userData){
             setError('no data')
@@ -19,12 +20,13 @@ const UserProfileModal = ({show, onClose, logOut, userData}) => {
     });
     
 
+    // Hide modal
     if(!show){
         return null;
     }
 
     return (
-        <div className='user-profile-modal__wrapper' data-testid='modal'>
+        <div className='user-profile-modal__wrapper' data-testid='profile-modal'>
             <div className='user-profile-modal__content'>
                 <h2>User Profile</h2>
                 <div className='user-profile-modal__info'>
@@ -32,7 +34,7 @@ const UserProfileModal = ({show, onClose, logOut, userData}) => {
                     <p data-testid='email'>{'Email: ' + email} </p>
                  </div>
                  <div className='user-profile-modal__buttons'>
-                    <button className='user-profile-modal__close' type='button' onClick={onClose} data-testid='close'>Close</button>
+                    <button className='user-profile-modal__close' type='button' onClick={onClose} data-testid='profile-close'>Close</button>
                     <button className='user-profile-modal__logout' data-testid='logOut' onClick={logOut}> Logout </button>
                 </div>
             </div>

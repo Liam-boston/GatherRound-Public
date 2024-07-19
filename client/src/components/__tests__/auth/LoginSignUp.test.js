@@ -2,7 +2,7 @@ import React, { act } from "react";
 import { render, cleanup, fireEvent } from "@testing-library/react";
 import { afterEach } from "@jest/globals";
 import '@testing-library/jest-dom/extend-expect';
-import LoginSignup from "../LoginSignup";
+import LoginSignup from "../../auth/LoginSignup";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 jest.mock('firebase/auth', () => require('../../../../__mocks__/firebase'))
