@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./CreateMeetingModal.css";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../services/firebase"
+import { useParams } from 'react-router-dom';
 
 const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
     const [meetingName, setMeetingName] = useState(""); // State to store the club name
     const [meetingDescription, setMeetingDescription] = useState(""); // State to store the club description
+    const { id } = useParams();
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
@@ -18,7 +20,7 @@ const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
 
         try {
             // Add a new document to the Firestore collection
-            await addDoc(collection(db, "Meetings"), {
+            await addDoc(collection(db, "Clubs", id ,"Meetings"), {
                 name: meetingName,
                 description: meetingDescription,
                 creator: [currentUser.uid], // Add the current user to the creator list

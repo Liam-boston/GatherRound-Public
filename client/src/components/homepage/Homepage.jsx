@@ -3,13 +3,14 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { signOut, getAuth } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
 import { auth, db } from "../../services/firebase";
-import {Link} from "react-router-dom";
+//import {Link} from "react-router-dom";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import CreateButton from "../common/CreateButton/CreateButton"; 
 import CreateClubModal from "./CreateClubModal";
 import "./Homepage.css"; 
 
 function Homepage() {
+    const navigate = useNavigate();
     const [clubs, setClubs] = useState([]); // State to hold the list of clubs stored in Firestore
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
@@ -90,7 +91,8 @@ function Homepage() {
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
                     {clubs.map((club) => (
-                         <Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
+                         //<Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
+                         <button type="button" onClick={(e) => navigate(`Clubs/${club.name}`)} key={club.id}  className='club-button'>{club.name}</button>  
                     ))}
                 </div>
                 {/* Display the success or failure message upon club creation */}

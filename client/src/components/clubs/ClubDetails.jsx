@@ -9,8 +9,8 @@ import CreateMeetingModal from "./CreateMeetingModal";
 import CreateButton from "../common/CreateButton/CreateButton"; 
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from "../../services/firebase";
-import {Link} from "react-router-dom";
-
+//import {Link} from "react-router-dom";
+import Meetings from "../meetings/Meetings";
 
 function ClubDetails() {
 
@@ -20,7 +20,7 @@ function ClubDetails() {
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [meetings, setMeetings] = useState([]); // State to hold the list of clubs stored in Firestore
-    const docRef = collection(db, "Meetings");
+    const docRef = collection(db, "Clubs", id, "Meetings");
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
@@ -56,11 +56,6 @@ function ClubDetails() {
         fetchMeetings(); // Call fetchMeetings when component mounts or currentUser changes
     }, [currentUser]);
 
-
-    const messagesList = [
-        'Welcome to ' + id,
-        'Meeting Announcement goes here'
-    ];
 
     // Function to handle profile button click
     const handleProfileClick = () => {
@@ -108,7 +103,8 @@ function ClubDetails() {
                             <div className='messages-list'>
                                 {/* Scrollable list of meeting messages*/}
                                 {meetings.map((meeting, index) => (
-                                 <Link to={`${meeting.name}`} key={index} className='options'>{meeting.name}: {meeting.description}</Link>
+                                 //<Link to={`${meeting.name}`} key={index} className='options'>{meeting.name}: {meeting.description}</Link>
+                                 <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id}})} key={index}  className='options'>{meeting.name}: {meeting.description}</button>  
                                 ))}
                             </div>
                             {/* Display the success or failure message upon meeting creation */}

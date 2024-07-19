@@ -1,18 +1,20 @@
 import "./Meetings.css"; 
 import React, {useEffect, useState} from 'react';
 //import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-
+//import { useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import ProfileButton from "../common/ProfileButton/ProfileButton";
+import ClubDetails from "../clubs/ClubDetails";
 
 
 function Meetings() {
 
     const navigate = useNavigate();
-    const { id } = useParams();
+    const {state} = useLocation();
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
+    const { id } = useParams();
+    const { clubID } = state;
 
         // Fetch the current user from Firebase Auth
         useEffect(() => {
@@ -41,7 +43,7 @@ function Meetings() {
              <ProfileButton onClick={handleProfileClick} />
             <div className='header'>
                 <h1>Club Name</h1>
-                <p>{id}</p>
+                <p>{clubID}</p>
                 <button onClick={(e) => navigate(-1)}> Back to Club Page </button>
             </div>
         </div>
