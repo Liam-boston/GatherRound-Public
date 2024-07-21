@@ -89,12 +89,12 @@ describe('User Profile Modal', () => {
     
     //UT-16: User profile modal calls logout when logout is clicked
     test('should call log out', () => {
-        let message = '';
-        const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {message='logOut clicked'}} userData={mockUserData} />);
+        const logout = jest.fn();
+        const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {}} logOut={logout} userData={mockUserData} />);
     
         fireEvent.click(getByTestId('logOut'));
     
-        expect(message).toBe('logOut clicked')
+        expect(logout).toHaveBeenCalledTimes(1);
     });
     
     //UT-17: User profile modal calls close when close is clicked
