@@ -1,8 +1,8 @@
-import React, { act } from 'react';
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import UserProfileModal from '../common/UserProfileModal'
+import UserProfileModal from '../../common/UserProfileModal';
 import '@testing-library/jest-dom/extend-expect';
-import Homepage from '../homepage/Homepage';
+import Homepage from '../../homepage/Homepage';
 import { getAuth } from 'firebase/auth';
 import { getDocs } from 'firebase/firestore';
 
