@@ -23,7 +23,7 @@ describe('Login', () => {
         fireEvent.click(getByTestId('login-submit'));
 
         expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(1);
-    }, 8000);
+    });
 });
 
 describe('Signup', () => {
