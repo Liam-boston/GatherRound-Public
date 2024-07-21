@@ -44,23 +44,14 @@ describe('User Profile Modal', () => {
         getAuth.mockReturnValue(mockGetAuth);
     });
     
-    //UT-11: Can render user profile modal
+    //UT-12: Can show user profile modal
     test('should render modal if `show` is true', () => {
         const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {}} userData={mockUserData} />);
     
         expect(getByTestId('profile-modal')).toBeInTheDocument();
     });
 
-    //UT-11: Can render user profile modal (in homepage)
-    test('should open modal from Homepage', () => {
-        const { getByTestId } = render(<Homepage />);
-    
-        fireEvent.click(getByTestId('profile-button'));
-    
-        expect(getByTestId('profile-modal')).toBeInTheDocument();
-    });
-    
-    //
+    //UT-13: Can hide user profile modal
     test('should not render modal if `show` is false', () => {
         const {getByTestId} = render(<UserProfileModal show={false} onClose={() => {}} logOut={() => {}} userData={mockUserData} />);
     
@@ -73,8 +64,19 @@ describe('User Profile Modal', () => {
     
         expect(modal).toBe(null);
     });
+
+    //UT-14: Can open user profile modal in a page
+    test('should open modal from Homepage', () => {
+        const { getByTestId } = render(<Homepage />);
     
-    //UT-12: Can render user data in user profile modal
+        fireEvent.click(getByTestId('profile-button'));
+    
+        expect(getByTestId('profile-modal')).toBeInTheDocument();
+    });
+    
+   
+    
+    //UT-15: Can render user data in user profile modal
     test('should render user data', () => {
         const component = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {}} userData={mockUserData} />);
     
@@ -85,7 +87,7 @@ describe('User Profile Modal', () => {
         expect(email.textContent).toBe('Email: test@mail.com ');
     }); 
     
-    //UT-13: Can log out from user profile modal
+    //UT-16: User profile modal calls logout when logout is clicked
     test('should call log out', () => {
         let message = '';
         const {getByTestId} = render(<UserProfileModal show={true} onClose={() => {}} logOut={() => {message='logOut clicked'}} userData={mockUserData} />);
@@ -95,7 +97,7 @@ describe('User Profile Modal', () => {
         expect(message).toBe('logOut clicked')
     });
     
-    //UT-14: Can close user profile modal
+    //UT-17: User profile modal calls close when close is clicked
     test('should call close', () => {
         const mockOnClose = jest.fn();
     
@@ -106,7 +108,7 @@ describe('User Profile Modal', () => {
         expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
-    //UT-14: Can close user profile modal (in homepage)
+    //UT-18: Can close user profile modal in a page
     test('should close modal from Homepage', () => {
         
         const { getByTestId } = render(<Homepage/>);
