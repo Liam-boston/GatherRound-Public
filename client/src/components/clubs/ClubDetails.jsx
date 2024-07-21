@@ -37,7 +37,7 @@ function ClubDetails() {
         return () => unsubscribe();
     }, []);
 
-    // Fetch clubs from Firestore
+    // Fetch meetings from Firestore
     useEffect(() => {
         const fetchMeetings = async () => {
             try {
@@ -99,7 +99,7 @@ function ClubDetails() {
                                 {/* List of options*/}
                                     <button type="button" onClick={(e) => navigate("ActivityList")}  className='options'>List of Activities</button>  
                                     <button type="button" onClick={(e) => navigate("MemberList")}  className='options'>List of Members</button>  
-                                    <button type="button" onClick={(e) => navigate(-1)}  className='options'>Return Home</button>  
+                                    <button type="button" onClick={(e) => navigate("/Homepage")}  className='options'>Return Home</button>  
                                     <button type="button" onClick={(e) => null}  className='options'>Leave Club</button>  
                             </div>
                     </div>
