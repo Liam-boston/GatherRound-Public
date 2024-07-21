@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 //import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { auth } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
@@ -16,7 +16,6 @@ function MemberList() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [member, setMember] = useState([]);
     const { id } = useParams();
-    const docRefMembers  = doc(db, "Clubs", id);
 
         // Fetch the current user from Firebase Auth
         useEffect(() => {
@@ -38,11 +37,12 @@ function MemberList() {
     useEffect(()=>{
         const fetchMembers = async () => {
             try {
-                await getDoc(docRefMembers).then((docSnap)=> {
-                    const tempData = docSnap.get("members")
-                    setMember(tempData)
-                    console.log(member, tempData);
-                }) 
+                const querySnapshot = await getDocs(collection(db, 'Clubs', id, "Members")); // Fetch the members collection
+                const tempData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setMember(tempData); // Update state with fetched members
             } catch(error) {
                 console.log(error)
             }    
@@ -70,7 +70,7 @@ function MemberList() {
                 <div className='scrollable-list'>
                     {/* Scrollable list of members */}
                     {member.map((members, index) => (
-                        <button onClick={(e) => null} key={index} className='member-button'>Name: {members}
+                        <button onClick={(e) => null} key={index} className='member-button'>Name: {members.name}
                         </button>
                     ))}
                 </div>

@@ -5,7 +5,7 @@ import { db } from "../../services/firebase"
 import { useParams } from 'react-router-dom';
 
 
-const CreateActivityModal = ({ show, onClose, setMessage, currentUser }) => {
+const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID }) => {
     const [activityName, setActivityName] = useState(""); // State to store the club name
     const [activityDescription, setActivityDescription] = useState(""); // State to store the club description
     const { id } = useParams();
@@ -21,7 +21,7 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser }) => {
 
         try {
             // Add a new document to the Firestore collection
-            await addDoc(collection(db, "Clubs", id, "Activities"), {
+            await addDoc(collection(db, "Clubs", clubID, "Meetings", id, "Activities"), {
                 name: activityName,
                 description: activityDescription,
                 creator: [currentUser.uid], // Add the current user to the creator list

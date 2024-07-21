@@ -44,7 +44,7 @@ class App extends React.Component {
             <Route path="Homepage" element={<PrivateRoute><Homepage/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/:id" element={<PrivateRoute><ClubDetails/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/:id/MemberList" element={<PrivateRoute><MemberList/></PrivateRoute>}/>
-            <Route path="/Homepage/Clubs/:id/ActivityList" element={<PrivateRoute><ActivityList/></PrivateRoute>}/>
+            <Route path="/Homepage/Clubs/:id/:id/ActivityList" element={<PrivateRoute><ActivityList/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/:id/:id" element={<PrivateRoute><Meetings/></PrivateRoute>}/>
             <Route path="*" element={<p>There's nothing here: 404!</p>}/>
           </Routes>

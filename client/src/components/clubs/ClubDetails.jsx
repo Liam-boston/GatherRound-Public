@@ -10,7 +10,6 @@ import CreateButton from "../common/CreateButton/CreateButton";
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from "../../services/firebase";
 //import {Link} from "react-router-dom";
-import Meetings from "../meetings/Meetings";
 
 function ClubDetails() {
 
@@ -36,7 +35,7 @@ function ClubDetails() {
         // Clean up the subscription on unmount
         return () => unsubscribe();
     }, []);
-
+   
     // Fetch clubs from Firestore
     useEffect(() => {
         const fetchMeetings = async () => {
@@ -91,8 +90,7 @@ function ClubDetails() {
                     <div className='options-wrapper'>
                             {/* Main wrapper for the options */}
                             <div className='options-list'>
-                                {/* List of options*/}
-                                    <button type="button" onClick={(e) => navigate("ActivityList")}  className='options'>List of Activities</button>  
+                                {/* List of options*/} 
                                     <button type="button" onClick={(e) => navigate("MemberList")}  className='options'>List of Members</button>  
                                     <button type="button" onClick={(e) => navigate(-1)}  className='options'>Return Home</button>  
                                     <button type="button" onClick={(e) => null}  className='options'>Leave Club</button>  
@@ -104,7 +102,7 @@ function ClubDetails() {
                                 {/* Scrollable list of meeting messages*/}
                                 {meetings.map((meeting, index) => (
                                  //<Link to={`${meeting.name}`} key={index} className='options'>{meeting.name}: {meeting.description}</Link>
-                                 <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id}})} key={index}  className='options'>{meeting.name}: {meeting.description}</button>  
+                                 <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id}})} key={index}  className='options'>{meeting.name}</button>  
                                 ))}
                             </div>
                             {/* Display the success or failure message upon meeting creation */}

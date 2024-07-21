@@ -1,8 +1,7 @@
 import "./ActivityList.css"; 
 import React, { useState, useEffect } from "react";
 //import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
@@ -18,12 +17,14 @@ function ActivityList() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [activities, setActivities] = useState([]); // State to hold the list of clubs stored in Firestore
-    const { id } = useParams();
+    const {state} = useLocation();
+    const { meetingID, clubID } = state;
 
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
         const auth = getAuth();
+
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 setCurrentUser(user);
@@ -40,7 +41,7 @@ function ActivityList() {
         useEffect(() => {
             const fetchActivities = async () => {
                 try {
-                    const querySnapshot = await getDocs(collection(db, 'Clubs', id, "Activities")); // Fetch the Activities collection
+                    const querySnapshot = await getDocs(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities")); // Fetch the Activities collection
                     const activitiesList = querySnapshot.docs.map(doc => ({
                         id: doc.id,
                         ...doc.data()
@@ -107,7 +108,7 @@ function ActivityList() {
                 </div>
                 <div className='create-club-modal'>
                     {/* Render the modal */}
-                    <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} />
+                    <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubID={clubID} />
                 </div>
             </div>
         </div>
