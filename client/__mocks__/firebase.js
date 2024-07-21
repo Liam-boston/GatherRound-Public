@@ -17,8 +17,17 @@ export const collection = jest.fn();
 export const doc = jest.fn();
 export const addDoc = jest.fn();
 export const getDocs = jest.fn();
+export const getDoc = jest.fn().mockResolvedValue({
+  name: 'John Smith',
+  email: 'test@mail.com'
+})
 export const setDoc = jest.fn();
 export const updateDoc = jest.fn();
 export const query = jest.fn();
 export const orderBy = jest.fn();
 export const arrayRemove = jest.fn();
+export const createUserWithEmailAndPassword = jest.fn().mockResolvedValue({
+  uid: 'fakeUserID',
+  email: 'test@mail.com'
+});
+export const signInWithEmailAndPassword = jest.fn().mockResolvedValue({});

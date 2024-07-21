@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from "../../services/firebase"
+import { db } from "../../services/firebase"
 import { doc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth, signOut } from 'firebase/auth';
 import { Navigate } from 'react-router-dom';
@@ -167,7 +167,7 @@ const LoginSignup = () => {
                         <p><a href="">Forgot password?</a></p>
                     </div>
 
-                    <button type="submit">Login</button>
+                    <button type="submit" data-testid='login-submit'>Login</button>
 
                     <div className='signup-option'>
                         <button className='sign-up' type="button" onClick={signupSwitch} data-testid='signup-switch'>Sign Up</button>

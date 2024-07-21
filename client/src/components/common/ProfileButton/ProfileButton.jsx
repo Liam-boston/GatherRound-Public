@@ -4,7 +4,7 @@ import "./ProfileButton.css"; // Create a CSS file for styling if needed
 
 const ProfileButton = ({ onClick }) => {
     return (
-        <button className="profile-button" onClick={onClick} title="View profile">
+        <button className="profile-button" onClick={onClick} title="View profile" data-testid='profile-button'>
             <CgProfile size={28}/>
         </button>
     );

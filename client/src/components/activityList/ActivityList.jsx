@@ -101,6 +101,7 @@ function ActivityList() {
                 )}
                 <div className='create-club'>
                     {/* Create club button */}
+                    {/* TODO: What's this about? */}
                     <CreateButton onClick={viewModal} />
                 </div>
                 <div className='create-club-modal'>

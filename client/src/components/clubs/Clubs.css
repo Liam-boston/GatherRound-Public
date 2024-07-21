@@ -1,0 +1,124 @@
+.header {
+    text-align: center; /* Center align content within header */
+    margin-bottom: 20px; /* Adjust spacing between header and homepage-wrapper */
+}
+
+.header h1 {
+    font-size: 40px;
+    color: #fff;
+    padding: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example shadow size and color */
+    margin: 0;
+  }
+
+.overall-wrapper{
+    position: relative;
+    width: 1300px;
+    border-radius: 10px;
+    overflow: hidden; /* Ensure content doesn't overflow the container */
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row; /* Stack form-boxes horizontally */
+    align-items: center; /* Center align items horizontally */
+    justify-content: space-evenly; 
+    padding: 20px; /* Add some padding for aesthetics */
+}
+
+.activity-wrapper {
+    position: relative;
+    width: 900px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px); /* Blur effect for background */
+    border-radius: 10px;
+    color: #000000; /* Darker green color */
+    overflow: hidden; /* Ensure content doesn't overflow the container */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    display: flex;
+    flex-direction: column; /* Stack form-boxes vertically */
+    align-items: center; /* Center align items horizontally */
+    justify-content: center; /* Center align items vertically */
+    padding: 20px; /* Add some padding for aesthetics */
+}
+
+.messages-list {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 100%;
+    max-height: 600px; /* Adjust this height to show only the first 4 elements */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.messages {
+    background-color: #d3d3d3; /* Light gray color */
+    border: none;
+    border-radius: 10px;
+    padding: 15px 15px;
+    margin: 10px 0;
+    font-size: 12px; /* Larger font size */
+    font-weight: bold; /* Bold font */
+    
+    width: 95%; /* Adjust the width to your preference */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.options-wrapper {
+    position: relative;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px); /* Blur effect for background */
+    border-radius: 10px;
+    color: #000000; /* Darker green color */
+    overflow: hidden; /* Ensure content doesn't overflow the container */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    display: flex;
+    flex-direction: column; /* Stack form-boxes vertically */
+    align-items: center; /* Center align items horizontally */
+    justify-content: center; /* Center align items vertically */
+    padding: 20px; /* Add some padding for aesthetics */
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-height: 600px; /* Adjust this height to show only the first 4 elements */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.options {
+    background-color: #d3d3d3; /* Light gray color */
+    border: none;
+    border-radius: 10px;
+    padding: 15px 15px;
+    margin: 10px 0;
+    font-size: 12px; /* Larger font size */
+    font-weight: bold; /* Bold font */
+    cursor: pointer;
+    width: 90%; /* Adjust the width to your preference */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.button:hover {
+    background-color: #b0b0b0; /* Darker gray on hover */
+}
+
+.RSVP-button{
+    line-height: 12px;
+     width: 40px;
+     font-size: 10pt;
+     font-weight: bold;
+     font-family: Cambria;
+     margin-top: 10px;
+     margin-right: 20px;
+     position:relative;
+     cursor: pointer;
+     float: inline-end;
+}
