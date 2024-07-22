@@ -85,7 +85,7 @@ function ActivityList() {
             <div className='header'>
                 <h1>Club Name</h1>
                 <p>List of activities</p>
-                <button onClick={(e) => navigate(-1)}> Back to Club Page </button>
+                <button onClick={(e) => navigate(-1)}> Back to Meeting Page </button>
             </div>
             <div className='activity-wrapper'>
                 <div className='scrollable-list'>

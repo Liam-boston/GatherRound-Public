@@ -37,6 +37,25 @@
     height: calc(1em + 16px + 32px); /* Adjust height to be one line taller */
 }
 
+.create-activity-modal__input-box-number {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.create-activity-modal__input-box-number input,
+.create-activity-modal__input-box-number textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-activity-modal__input-box-number textarea {
+    height: calc(1em + 16px); /* Adjust height to be one line taller */
+}
+
+
+
 .create-activity-modal__buttons {
     display: flex;
     justify-content: center; /* Center the buttons horizontally */

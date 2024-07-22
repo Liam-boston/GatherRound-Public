@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./CreateActivityModal.css";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { useParams } from 'react-router-dom';
 
@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID }) => {
     const [activityName, setActivityName] = useState(""); // State to store the club name
     const [activityDescription, setActivityDescription] = useState(""); // State to store the club description
+    const [activityMinPlayers, setActivityMinPlayers] = useState(null); 
+    const [activityMaxPlayers, setActivityMaxPlayers] = useState(null);
     const { id } = useParams();
 
     const handleSubmit = async (e) => {
@@ -19,20 +21,35 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID })
             return;
         }
 
+        const data = {
+            name: activityName,
+            description: activityDescription,
+            creator: [currentUser.uid], // Add the current user to the creator list
+            votes: 0, // Initialize an empty voters list
+            minPlayers: activityMinPlayers,
+            maxPlayers: activityMaxPlayers,
+            createdAt: new Date() // Set the creation date 
+        };
+
+        // Reference to the Firestore document
+        const docRef = doc(db, "Clubs", clubID, "Meetings", id, "Activities", activityName);
+
         try {
             // Add a new document to the Firestore collection
-            await addDoc(collection(db, "Clubs", clubID, "Meetings", id, "Activities"), {
-                name: activityName,
-                description: activityDescription,
-                creator: [currentUser.uid], // Add the current user to the creator list
-                voters: [], // Initialize an empty voters list
-                createdAt: new Date() // Set the creation date
-            });
+            await setDoc(docRef, data); 
+            // await addDoc(collection(db, "Clubs", clubID, "Meetings", id, "Activities"), {
+            //     name: activityName,
+            //     description: activityDescription,
+            //     creator: [currentUser.uid], // Add the current user to the creator list
+            //     votes: [], // Initialize an empty voters list
+            //     createdAt: new Date() // Set the creation date
+            // });
 
             // Clear both input fields
             setActivityName("");
             setActivityDescription("");
-
+            setActivityMinPlayers(null);
+            setActivityMaxPlayers(null);
             // Set a success message
             setMessage({ type: "success", text: `Successfully created ${activityName}!` });
 
@@ -72,6 +89,22 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID })
                             placeholder='Description' 
                             value={activityDescription} 
                             onChange={(e) => setActivityDescription(e.target.value)}
+                        ></textarea>
+                    </div>
+                    <div className='create-activity-modal__input-box-number'>
+                        <textarea 
+                            id='activity-description' 
+                            placeholder='Minimum' 
+                            value={activityMinPlayers} 
+                            onChange={(e) => setActivityMinPlayers(parseInt(e.target.value))}
+                        ></textarea>
+                    </div>
+                    <div className='create-activity-modal__input-box-number'>
+                        <textarea 
+                            id='activity-description' 
+                            placeholder='Minimum' 
+                            value={activityMaxPlayers} 
+                            onChange={(e) => setActivityMaxPlayers(parseInt(e.target.value))}
                         ></textarea>
                     </div>
                     <div className='create-activity-modal__buttons'>
