@@ -61,7 +61,7 @@ function MemberList() {
         <div>
              <ProfileButton onClick={handleProfileClick} />
             <div className='header'>
-                <h1>Club Name</h1>
+                <h1>{id}</h1>
                 <p>List of members</p>
                 <button onClick={(e) => navigate(-1)}> Back to Club Page </button>
             </div>

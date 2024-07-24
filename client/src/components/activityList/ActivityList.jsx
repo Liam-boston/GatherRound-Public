@@ -83,7 +83,7 @@ function ActivityList() {
         <div>
             <ProfileButton onClick={handleProfileClick} />
             <div className='header'>
-                <h1>Club Name</h1>
+                <h1>{meetingID}</h1>
                 <p>List of activities</p>
                 <button onClick={(e) => navigate(-1)}> Back to Meeting Page </button>
             </div>
@@ -91,8 +91,7 @@ function ActivityList() {
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
                     {activities.map((activity, index) => (
-                        <button onClick={(e) => null} key={index} className='club-button'>{activity.name}
-                        </button>
+                        <button onClick={(e) => null} key={index} className='club-button'>{activity.name} | Min-Max: {activity.minPlayers}-{activity.maxPlayers} | Description: {activity.description}</button>
                         // Mapping through tempClubList to create club buttons
                     ))}
                 </div>

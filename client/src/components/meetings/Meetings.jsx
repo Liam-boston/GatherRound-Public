@@ -99,7 +99,6 @@ function Meetings() {
              <ProfileButton onClick={handleProfileClick} />
             <div className='header'>
                 <h1>{meeting.date}</h1>
-                <h1>{currentUserID}</h1>
                 <div className='master-wrapper'>
                     <div className='overall-wrapper'>
                         <div className='options-wrapper'>

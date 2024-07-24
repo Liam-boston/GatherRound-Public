@@ -84,7 +84,7 @@ function ClubDetails() {
             <div>
                  <ProfileButton onClick={handleProfileClick} />
                 <div className='header'>
-                    <h1>Club Name</h1>
+                    <h1>{id}</h1>
                 </div>
                 <div className='overall-wrapper'>
                     <div className='options-wrapper'>
