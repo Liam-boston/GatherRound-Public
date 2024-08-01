@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
-// import InviteModal from "../MemberList/InviteModal";
+import InviteModal from "../MemberList/InviteModal";
 import { db } from "../../services/firebase";
 
 function MemberList() {
@@ -12,7 +12,6 @@ function MemberList() {
     const [member, setMember] = useState([]); // Initialize with an empty array
     const [showModal, setShowModal] = useState(false); // State to control the modal visibility
     const [isAdmin, setIsAdmin] = useState(false); // State to check if the current user is an admin
-    const [message, setMessage] = useState(null); // State to manage messages
     const [clubName, setClubName] = useState(''); // State to store the club name
     const { id } = useParams();
     const docRef = doc(db, "Clubs", id);
@@ -70,10 +69,6 @@ function MemberList() {
         fetchClubData();
     }, [docRef, id]);
 
-    const handleSetMessage = (message) => {
-        setMessage(message);
-    };
-
     const openModal = () => {
         setShowModal(true);
     };
@@ -83,7 +78,7 @@ function MemberList() {
     };
 
     return (
-        <div>
+        <div className="container">
             <div className='header'>
                 <h1>{clubName}</h1>
                 <p>Members</p>
@@ -101,10 +96,10 @@ function MemberList() {
                         <p>No members found.</p>
                     )}
                 </div>
-                {/* <div className="tooltip-wrapper">
-                    <button 
-                        className={`invite-button ${!isAdmin ? 'disabled' : ''}`} 
-                        onClick={isAdmin ? openModal : null} 
+                <div className="tooltip-wrapper">
+                    <button
+                        className={`invite-button ${!isAdmin ? 'disabled' : ''}`}
+                        onClick={isAdmin ? openModal : null}
                         disabled={!isAdmin}
                     >
                         Invite Members
@@ -114,8 +109,8 @@ function MemberList() {
                     )}
                 </div>
                 <div className="invite-modal">
-                    <InviteModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubId={id} isAdmin={isAdmin} />
-                </div> */}
+                    <InviteModal show={showModal} onClose={closeModal} currentUser={currentUser} clubId={id} isAdmin={isAdmin} />
+                </div>
             </div>
         </div>
     );
