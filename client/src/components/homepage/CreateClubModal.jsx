@@ -1,80 +1,101 @@
 import React, { useState } from "react";
 import "./CreateClubModal.css";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
-const CreateClubModal = ({ show, onClose, setMessage, currentUser }) => {
-    const [clubName, setClubName] = useState(""); // State to store the club name
-    const [clubDescription, setClubDescription] = useState(""); // State to store the club description
+const CreateClubModal = ({ show, onClose, setMessage, currentUser, onClubCreated }) => {
+    const [clubName, setClubName] = useState(""); 
+    const [clubDescription, setClubDescription] = useState(""); 
 
-    // Function to handle form submission
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+        e.preventDefault(); 
 
-        // If the user is not logged in, show an error message and return
         if (!currentUser) {
             setMessage({ type: "error", text: "You must be logged in to create a club." });
             return;
         }
 
-        // Prepare club data to be added to Firestore
+        // Fetch the user data from the Users collection
+        const userDocRef = doc(db, "Users", currentUser.uid);
+        let userData;
+
+        try {
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                userData = userDoc.data();
+            } else {
+                setMessage({ type: "error", text: "User data not found." });
+                return;
+            }
+        } catch (error) {
+            setMessage({ type: "error", text: "Failed to fetch user data." });
+            console.log("Error fetching user document: ", error);
+            return;
+        }
+
+        // Prepare the club data
         const data = {
             name: clubName,
             description: clubDescription,
-            admin: [currentUser.uid], // Add the current user to the admin list
-            members: [], // Initialize an empty members list
-            createdAt: new Date() // Set the creation date
+            createdAt: new Date() 
         };
 
-        // Reference to the Firestore document
+        // Reference to the new club document
         const docRef = doc(db, "Clubs", clubName);
 
         try {
-            // Set the document with the prepared data
+            // Create the new club document
             await setDoc(docRef, data);
 
-            // Clear both input fields after successful creation
+            // Update the user's clubNames field
+            await updateDoc(userDocRef, {
+                clubNames: arrayUnion(clubName) 
+            });
+
+            // Add the current user to the Members subcollection of the new club
+            await setDoc(doc(db, `Clubs/${clubName}/Members/${currentUser.uid}`), {
+                id: currentUser.uid,
+                name: userData.name, 
+                email: userData.email,
+                admin: true
+            });
+
             setClubName("");
             setClubDescription("");
-
-            // Set success message
-            setMessage({ type: "success", text: `Successfully created ${clubName}!` });
-
-            // Close the modal after successful creation
+            setMessage({ type: "success", text: `Successfully created the ${clubName} club!` });
+            onClubCreated(); // Notify parent to refresh
             onClose();
         } catch (error) {
-            // Set failure message if there's an error
             setMessage({ type: "error", text: `Failed to create ${clubName}, please try again.` });
             console.log("Error creating document: ", error);
         }
     };
 
-    // If the modal is not supposed to be shown, return null to render nothing
     if (!show) {
         return null;
     }
 
-    // Render the modal content if 'show' prop is true
     return (
         <div className='create-club-modal__wrapper'>
             <div className='create-club-modal__content'>
                 <h2>Create a New Club</h2>
                 <form onSubmit={handleSubmit}>
                     <div className='create-club-modal__input-box'>
-                        <input 
-                            id='club-name' 
-                            type='text' 
-                            placeholder='Club Name' 
-                            value={clubName} 
-                            onChange={(e) => setClubName(e.target.value)} 
-                            required 
+                        <input
+                            id='club-name'
+                            type='text'
+                            placeholder='Club Name'
+                            value={clubName}
+                            onChange={(e) => setClubName(e.target.value)}
+                            required
                         />
                     </div>
                     <div className='create-club-modal__input-box'>
-                        <textarea 
-                            id='club-description' 
-                            placeholder='Description' 
-                            value={clubDescription} 
+                        <textarea
+                            id='club-description'
+                            placeholder='Description'
+                            value={clubDescription}
                             onChange={(e) => setClubDescription(e.target.value)}
                         ></textarea>
                     </div>
