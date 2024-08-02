@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../services/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import "./InviteModal.css";
 
@@ -6,12 +8,28 @@ const InviteModal = ({ show, onClose, currentUser, clubId, clubName }) => {
     const [generatedLink, setGeneratedLink] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
 
-    const handleGenerateInvite = () => {
-        // Generate a unique token for the invite using uuidv4
-        const inviteToken = uuidv4();
+    const handleGenerateInvite = async () => {
+        try {
+            // Generate a unique token for the invite using uuidv4
+            const inviteToken = uuidv4();
 
-        const link = `${window.location.origin}/signup?inviteToken=${inviteToken}&clubId=${clubId}&admin=${isAdmin}`;
-        setGeneratedLink(link);
+            // Create the invite link
+            const link = `${window.location.origin}/JoinClub?inviteToken=${inviteToken}&clubId=${clubId}&admin=${isAdmin}`;
+            setGeneratedLink(link);
+
+            // Store the invite token in Firestore
+            await setDoc(doc(db, "Invitations", inviteToken), {
+                clubId: clubId,
+                createdAt: new Date(),
+                used: false,
+                admin: isAdmin,
+                createdBy: currentUser.uid
+            });
+            console.log("Successfully generated invite link and added it to the Invitations collection.");
+        } catch (error) {
+            console.error("Error generating invite:", error);
+            alert("Failed to generate invite.");
+        }
     };
 
     const handleClose = () => {
