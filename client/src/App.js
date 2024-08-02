@@ -40,6 +40,7 @@ class App extends React.Component {
         <Router>
           <Routes>
             <Route exact path="/" element={<LoginSignup/>}/>
+            <Route path="/JoinClub" element={<LoginSignup />} /> {/* New JoinClub route for club invites */}
             <Route path="EmailVerification" element={<EmailVerification/>}/>
             <Route path="Homepage" element={<PrivateRoute><Homepage/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/:id" element={<PrivateRoute><ClubDetails/></PrivateRoute>}/>
