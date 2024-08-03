@@ -1,4 +1,4 @@
-.create-activity-modal__wrapper {
+.create-meeting-modal__wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
     z-index: 1000;
 }
 
-.create-activity-modal__content {
+.create-meeting-modal__content {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -20,32 +20,32 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.create-activity-modal__input-box {
+.create-meeting-modal__input-box {
     margin-bottom: 5px;
     margin-top: 10px;
 }
 
-.create-activity-modal__input-box input,
-.create-activity-modal__input-box textarea {
+.create-meeting-modal__input-box input,
+.create-meeting-modal__input-box textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.create-activity-modal__input-box textarea {
+.create-meeting-modal__input-box textarea {
     height: calc(1em + 16px + 32px); /* Adjust height to be one line taller */
 }
 
-.create-activity-modal__buttons {
+.create-meeting-modal__buttons {
     display: flex;
     justify-content: center; /* Center the buttons horizontally */
     gap: 10px; /* Space between the buttons */
     margin-top: 10px;
 }
 
-.create-activity-modal__submit,
-.create-activity-modal__cancel {
+.create-meeting-modal__submit,
+.create-meeting-modal__cancel {
     padding: 10px 15px;
     border: none;
     border-radius: 20px; /* Set border-radius to 20px for both buttons */
@@ -54,21 +54,21 @@
     text-decoration: none;
 }
 
-.create-activity-modal__submit {
+.create-meeting-modal__submit {
     background-color: #186e3c;
     color: #fff;
 }
 
-.create-activity-modal__submit:hover {
+.create-meeting-modal__submit:hover {
     background-color: #145a30; /* Darker green on hover */
 }
 
-.create-activity-modal__cancel {
+.create-meeting-modal__cancel {
     background-color: #d3d3d3; /* Light gray color */
     color: #186e3c; /* Darker green color */
 }
 
-.create-activity-modal__cancel:hover {
+.create-meeting-modal__cancel:hover {
     background-color: #b0b0b0; /* Darker gray on hover */
     color: #186e3c; /* Darker green color */
 }

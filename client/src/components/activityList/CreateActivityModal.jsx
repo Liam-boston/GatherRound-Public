@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import "./CreateActivityModal.css";
+import React, { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { useParams } from 'react-router-dom';
@@ -95,7 +95,7 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID })
                     <div className='create-activity-modal__input-box-number'>
                         <textarea 
                             id='activity-description' 
-                            placeholder='Minimum' 
+                            placeholder='Maximum' 
                             value={activityMaxPlayers} 
                             onChange={(e) => setActivityMaxPlayers(parseInt(e.target.value))}
                         ></textarea>

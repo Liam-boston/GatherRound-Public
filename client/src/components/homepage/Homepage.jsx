@@ -1,13 +1,12 @@
+import "./Homepage.css"; 
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
 import { signOut, getAuth } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { auth, db } from "../../services/firebase";
-import { Link } from "react-router-dom";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import CreateButton from "../common/CreateButton/CreateButton"; 
 import CreateClubModal from "./CreateClubModal";
-import "./Homepage.css"; 
 import UserProfileModal from "../common/UserProfileModal";
 
 function Homepage() {
@@ -132,7 +131,6 @@ function Homepage() {
             <div className='header'>
                 <h1>GatherRound</h1>
                 <p>Let the games begin!</p>
-                <button onClick={logOut}> Logout </button>
             </div>
             <div className='homepage-wrapper'>
                 {/* Display message if userClubs is empty */}
@@ -143,7 +141,7 @@ function Homepage() {
                 )}
                 <div className='scrollable-list'>
                     {clubs.map((club) => (
-                        <Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
+                        <button type="button" onClick={(e) => navigate(`Clubs/${club.name}`)} key={club.id}  className='club-button'>{club.name}</button>
                     ))}
                 </div>
                 {message && (

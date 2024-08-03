@@ -1,7 +1,6 @@
 import "./ActivityList.css"; 
 import React, { useState, useEffect } from "react";
-//import { Navigate } from 'react-router-dom';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';

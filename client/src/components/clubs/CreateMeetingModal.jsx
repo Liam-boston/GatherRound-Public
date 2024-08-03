@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CreateMeetingModal.css";
 import { db } from "../../services/firebase";
-import { collection, addDoc, setDoc, doc, Timestamp } from "firebase/firestore";
+import { setDoc, doc, Timestamp } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
 
 const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
@@ -74,7 +74,7 @@ const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
                             required 
                         />
                     </div>
-                    <div className='create-activity-modal__input-box'>
+                    <div className='create-meeting-modal__input-box'>
                         <input 
                             id='meeting-date' 
                             type='text' 
@@ -84,7 +84,7 @@ const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
                             required 
                         />
                     </div>
-                    <div className='create-activity-modal__input-box'>
+                    <div className='create-meeting-modal__input-box'>
                         <textarea 
                             id='meeting-description' 
                             placeholder='Description' 

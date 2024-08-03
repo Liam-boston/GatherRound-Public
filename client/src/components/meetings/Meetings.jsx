@@ -1,7 +1,7 @@
 import "./Meetings.css"; 
 import React, {useEffect, useState} from 'react';
-import { useParams, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { doc, getDoc, setDoc, getDocs, collection } from "firebase/firestore";
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { doc, getDoc, setDoc} from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
 import Attendees from "./Attendees";

@@ -1,6 +1,5 @@
 import "./ClubDetails.css"; 
 import React, { useState, useEffect } from "react";
-//import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
@@ -9,7 +8,6 @@ import CreateMeetingModal from "./CreateMeetingModal";
 import CreateButton from "../common/CreateButton/CreateButton"; 
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from "../../services/firebase";
-//import {Link} from "react-router-dom";
 
 function ClubDetails() {
 
@@ -101,7 +99,6 @@ function ClubDetails() {
                             <div className='messages-list'>
                                 {/* Scrollable list of meeting messages*/}
                                 {meetings.map((meeting, index) => (
-                                 //<Link to={`${meeting.name}`} key={index} className='options'>{meeting.name}: {meeting.description}</Link>
                                  <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id, currentUserID: currentUser.uid}})} key={index}  className='options'>{meeting.name}</button>  
                                 ))}
                             </div>

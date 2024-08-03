@@ -1,9 +1,9 @@
+import './LoginSignup.css';
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Navigate, useNavigate } from 'react-router-dom';
 import { db } from "../../services/firebase"
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth, signOut } from 'firebase/auth';
-import './LoginSignup.css';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const LoginSignup = () => {
