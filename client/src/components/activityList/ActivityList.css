@@ -41,6 +41,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    min-height: 150px;
     max-height: 475px; /* Adjust this height to show only the first 4 elements */
     overflow-y: auto; /* Enable vertical scrolling if needed */
     margin-bottom: 15px;

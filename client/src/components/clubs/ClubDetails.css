@@ -46,6 +46,7 @@
     flex-direction: column-reverse;
     align-items: center;
     width: 100%;
+    min-height: 150px;
     max-height: 600px; /* Adjust this height to show only the first 4 elements */
     overflow-y: auto; /* Enable vertical scrolling if needed */
     margin-bottom: 5px;
@@ -58,7 +59,7 @@
     border-radius: 10px;
     padding: 15px 15px;
     margin: 10px 0;
-    font-size: 12px; /* Larger font size */
+    font-size: 18px; /* Larger font size */
     font-weight: bold; /* Bold font */
     
     width: 95%; /* Adjust the width to your preference */

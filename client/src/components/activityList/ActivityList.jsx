@@ -1,7 +1,7 @@
 import "./ActivityList.css"; 
 import React, { useState, useEffect } from "react";
 //import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
@@ -17,11 +17,14 @@ function ActivityList() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [activities, setActivities] = useState([]); // State to hold the list of clubs stored in Firestore
+    const {state} = useLocation();
+    const { meetingID, clubID } = state;
 
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
         const auth = getAuth();
+
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 setCurrentUser(user);
@@ -38,7 +41,7 @@ function ActivityList() {
         useEffect(() => {
             const fetchActivities = async () => {
                 try {
-                    const querySnapshot = await getDocs(collection(db, 'Activities')); // Fetch the Activities collection
+                    const querySnapshot = await getDocs(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities")); // Fetch the Activities collection
                     const activitiesList = querySnapshot.docs.map(doc => ({
                         id: doc.id,
                         ...doc.data()
@@ -80,16 +83,15 @@ function ActivityList() {
         <div>
             <ProfileButton onClick={handleProfileClick} />
             <div className='header'>
-                <h1>Club Name</h1>
+                <h1>{meetingID}</h1>
                 <p>List of activities</p>
-                <button onClick={(e) => navigate(-1)}> Back to Club Page </button>
+                <button onClick={(e) => navigate(-1)}> Back to Meeting Page </button>
             </div>
             <div className='activity-wrapper'>
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
                     {activities.map((activity, index) => (
-                        <button onClick={(e) => null} key={index} className='club-button'>{activity.name}
-                        </button>
+                        <button onClick={(e) => null} key={index} className='club-button'>{activity.name} | Min-Max: {activity.minPlayers}-{activity.maxPlayers} | Description: {activity.description}</button>
                         // Mapping through tempClubList to create club buttons
                     ))}
                 </div>
@@ -106,7 +108,7 @@ function ActivityList() {
                 </div>
                 <div className='create-club-modal'>
                     {/* Render the modal */}
-                    <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} />
+                    <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubID={clubID} />
                 </div>
             </div>
         </div>

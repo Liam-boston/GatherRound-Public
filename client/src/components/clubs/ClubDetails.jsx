@@ -9,8 +9,7 @@ import CreateMeetingModal from "./CreateMeetingModal";
 import CreateButton from "../common/CreateButton/CreateButton"; 
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from "../../services/firebase";
-import {Link} from "react-router-dom";
-
+//import {Link} from "react-router-dom";
 
 function ClubDetails() {
 
@@ -20,7 +19,7 @@ function ClubDetails() {
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [meetings, setMeetings] = useState([]); // State to hold the list of clubs stored in Firestore
-    const docRef = collection(db, "Meetings");
+    const docRef = collection(db, "Clubs", id, "Meetings");
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
@@ -57,11 +56,6 @@ function ClubDetails() {
     }, [currentUser]);
 
 
-    const messagesList = [
-        'Welcome to ' + id,
-        'Meeting Announcement goes here'
-    ];
-
     // Function to handle profile button click
     const handleProfileClick = () => {
         // TODO: Implement profile button click logic
@@ -90,14 +84,13 @@ function ClubDetails() {
             <div>
                  <ProfileButton onClick={handleProfileClick} />
                 <div className='header'>
-                    <h1>Club Name</h1>
+                    <h1>{id}</h1>
                 </div>
                 <div className='overall-wrapper'>
                     <div className='options-wrapper'>
                             {/* Main wrapper for the options */}
                             <div className='options-list'>
-                                {/* List of options*/}
-                                    <button type="button" onClick={(e) => navigate("ActivityList")}  className='options'>List of Activities</button>  
+                                {/* List of options*/} 
                                     <button type="button" onClick={(e) => navigate("MemberList")}  className='options'>List of Members</button>  
                                     <button type="button" onClick={(e) => navigate("/Homepage")}  className='options'>Return Home</button>  
                                     <button type="button" onClick={(e) => null}  className='options'>Leave Club</button>  
@@ -108,7 +101,8 @@ function ClubDetails() {
                             <div className='messages-list'>
                                 {/* Scrollable list of meeting messages*/}
                                 {meetings.map((meeting, index) => (
-                                 <Link to={`${meeting.name}`} key={index} className='options'>{meeting.name}: {meeting.description}</Link>
+                                 //<Link to={`${meeting.name}`} key={index} className='options'>{meeting.name}: {meeting.description}</Link>
+                                 <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id, currentUserID: currentUser.uid}})} key={index}  className='options'>{meeting.name}</button>  
                                 ))}
                             </div>
                             {/* Display the success or failure message upon meeting creation */}

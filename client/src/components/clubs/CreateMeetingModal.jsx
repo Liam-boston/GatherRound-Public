@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./CreateMeetingModal.css";
-import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import { collection, addDoc, setDoc, doc, Timestamp } from "firebase/firestore";
+import { useParams } from 'react-router-dom';
 
 const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
-    const [meetingName, setMeetingName] = useState(""); // State to store the club name
-    const [meetingDescription, setMeetingDescription] = useState(""); // State to store the club description
+    const [meetingName, setMeetingName] = useState(""); // State to store the meeting name
+    const [meetingDate, setMeetingDate] = useState(""); // State to store the meeting date
+    const [meetingDescription, setMeetingDescription] = useState(""); // State to store the meeting description
+    const { id } = useParams();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,19 +19,26 @@ const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
             return;
         }
 
-        try {
-            // Add a new document to the Firestore collection
-            await addDoc(collection(db, "Meetings"), {
+            // Prepare club data to be added to Firestore
+            const data = {
                 name: meetingName,
                 description: meetingDescription,
+                date: meetingDate,
+                dateTest: Timestamp.fromDate(new Date(meetingDate)),
                 creator: [currentUser.uid], // Add the current user to the creator list
-                createdAt: new Date(), // Set the creation date
-                attendees: [], // Initialize empty list of attendees
-                activities: [] // Initialize empty list of activities        
-            });
+                createdAt: new Date(), // Set the creation date  
+            };
+    
+            // Reference to the Firestore document
+            const docRef = doc(db, "Clubs", id, "Meetings", meetingName);
+
+        try {
+            // Add a new document to the Firestore collection
+            await setDoc(docRef, data); 
 
             // Clear both input fields
             setMeetingName("");
+            setMeetingDate("");
             setMeetingDescription("");
 
             // Set a success message
@@ -64,7 +74,17 @@ const CreateMeetingModal = ({ show, onClose, setMessage, currentUser }) => {
                             required 
                         />
                     </div>
-                    <div className='create-meeting-modal__input-box'>
+                    <div className='create-activity-modal__input-box'>
+                        <input 
+                            id='meeting-date' 
+                            type='text' 
+                            placeholder='mm/dd/yyyy' 
+                            value={meetingDate} 
+                            onChange={(e) => setMeetingDate(e.target.value)} 
+                            required 
+                        />
+                    </div>
+                    <div className='create-activity-modal__input-box'>
                         <textarea 
                             id='meeting-description' 
                             placeholder='Description' 

@@ -1,10 +1,11 @@
 import "./MemberList.css";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore"; 
+import { db } from "../../services/firebase"
+import { auth } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
 import InviteModal from "../MemberList/InviteModal";
-import { db } from "../../services/firebase";
 
 function MemberList() {
     const navigate = useNavigate();
