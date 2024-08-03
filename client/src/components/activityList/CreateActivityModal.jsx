@@ -37,14 +37,7 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID })
         try {
             // Add a new document to the Firestore collection
             await setDoc(docRef, data); 
-            // await addDoc(collection(db, "Clubs", clubID, "Meetings", id, "Activities"), {
-            //     name: activityName,
-            //     description: activityDescription,
-            //     creator: [currentUser.uid], // Add the current user to the creator list
-            //     votes: [], // Initialize an empty voters list
-            //     createdAt: new Date() // Set the creation date
-            // });
-
+     
             // Clear both input fields
             setActivityName("");
             setActivityDescription("");

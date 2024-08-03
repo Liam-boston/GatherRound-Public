@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from "../../services/firebase"
 import { doc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth, signOut } from 'firebase/auth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import './LoginSignup.css';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
@@ -27,6 +27,7 @@ const LoginSignup = () => {
     const regExPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
 
     const [goToEmailVerification, setGoToEmailVerification] = useState(false);
+    const navigate = useNavigate();
     const [goToHomepage, setGoToHomepage] = useState(false);
     const auth = getAuth();
 
@@ -46,7 +47,8 @@ const LoginSignup = () => {
         signInWithEmailAndPassword(auth, email, password ).then(authUser => {
             if(authUser.user.emailVerified){ //This will return true or false
              console.log('email is verified')
-             setGoToHomepage(true);
+             navigate("Homepage", { state: {currentUserID: authUser.user.uid}});
+             //setGoToHomepage(true);
             }else{
               console.log('email not verified')
             }

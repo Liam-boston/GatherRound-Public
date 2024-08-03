@@ -3,7 +3,7 @@ import "./Attendees.css";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
-const Attendees = ({ currentUser, clubID, meetingID }) => {
+const Attendees = ({ clubID, meetingID, RSVPClicked }) => {
     const [attendees, setAttendees] = useState([]); // State to store the current user
 
     // Fetch attendees from Firestore
@@ -23,7 +23,7 @@ const Attendees = ({ currentUser, clubID, meetingID }) => {
         };
 
         fetchAttendees(); 
-    }, []);
+    }, [RSVPClicked]);
 
 
 

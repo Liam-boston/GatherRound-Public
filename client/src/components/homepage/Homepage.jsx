@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom"; 
+import { Navigate, useNavigate, useLocation} from "react-router-dom"; 
 import { signOut, getAuth } from 'firebase/auth';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import { auth, db } from "../../services/firebase";
 //import {Link} from "react-router-dom";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
@@ -15,6 +15,11 @@ function Homepage() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const [message, setMessage] = useState(null); // State to hold the success or failure message
+    const {state} = useLocation();
+    const { currentUserID } = state;
+
+
+    
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
@@ -48,6 +53,9 @@ function Homepage() {
 
         fetchClubs(); // Call fetchClubs when component mounts or currentUser changes
     }, [currentUser]);
+
+
+
 
     // Function to handle showing the modal
     const viewModal = () => {
@@ -90,9 +98,9 @@ function Homepage() {
             <div className='homepage-wrapper'>
                 <div className='scrollable-list'>
                     {/* Scrollable list of club buttons */}
-                    {clubs.map((club) => (
+                    {clubs.map((club, index) => (
                          //<Link key={club.id} to={`Clubs/${club.name}`} className='club-button'>{club.name}</Link>
-                         <button type="button" onClick={(e) => navigate(`Clubs/${club.name}`)} key={club.id}  className='club-button'>{club.name}</button>  
+                         <button type="button" onClick={(e) => navigate(`Clubs/${club.name}`)} key={index} className='club-button'>{club.name}</button>  
                     ))}
                 </div>
                 {/* Display the success or failure message upon club creation */}

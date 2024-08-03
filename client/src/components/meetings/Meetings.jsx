@@ -1,8 +1,6 @@
 import "./Meetings.css"; 
 import React, {useEffect, useState} from 'react';
-//import { Navigate } from 'react-router-dom';
-//import { useNavigate } from 'react-router-dom';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { doc, getDoc, setDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { getAuth } from 'firebase/auth';
@@ -17,6 +15,8 @@ function Meetings() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [meeting, setMeeting] = useState({});
     const [member, setMember] = useState({});
+    const [attendee, setAttendee] = useState();
+    const [RSVPClicked, setRSVPClicked] = useState(null);
     const { id } = useParams();
     const { clubID, currentUserID } = state;
     const docRef = doc(db, "Clubs", clubID, "Meetings", id);
@@ -62,12 +62,33 @@ function Meetings() {
                 setMember(tempData.data()); 
                 console.log(member);
             } catch (error) {
-                console.error("Error fetching meeting: ", error);
+                console.error("Error fetching current user: ", error);
             }
         };
 
         fetchMember(); 
     }, [currentUser]);
+
+    // Fetch attendee status from Firestore
+    useEffect(() => {
+        const attendeeCheck = async () => {
+            // Reference to the Firestore document
+            const docRef4 = doc(db, "Clubs", clubID, "Meetings", id, "Attendees", currentUserID);
+    
+            try {
+                const snapshot = await getDoc(docRef4); 
+                if (snapshot.exists()){
+                    setAttendee(true);
+                }
+            } catch (error) {
+                console.log("Error attendeeCheck ", error);
+            }
+        }
+
+
+        attendeeCheck(); 
+    }, [RSVPClicked]);
+
 
 
     const handleRSVPClick = async (e) => {
@@ -86,6 +107,7 @@ function Meetings() {
         } catch (error) {
             console.log("Error RSVP ", error);
         }
+        setRSVPClicked(true);
     }
 
     // Function to handle profile button click
@@ -93,6 +115,24 @@ function Meetings() {
         // TODO: Implement profile button click logic
     };
 
+
+        // Fetch current user from Firestore
+        useEffect(() => {
+            const fetchMember = async () => {
+                try {
+                    const tempData = await getDoc(docRef2); 
+                    setMember(tempData.data()); 
+                    console.log(member);
+                } catch (error) {
+                    console.error("Error fetching meeting: ", error);
+                }
+            };
+    
+            fetchMember(); 
+        }, [currentUser]);
+
+    
+    
     
     return (
         <div>
@@ -105,7 +145,7 @@ function Meetings() {
                                 {/* Main wrapper for the options */}
                                 <div className='options-list'>
                                     {/* List of options*/}
-                                        <button type="button" onClick={(e) => navigate("ActivityList", { state: {meetingID: id, clubID: clubID}})}  className='options'>List of Activities</button>  
+                                        <button type="button" disabled={!attendee} onClick={(e) => navigate("ActivityList", { state: {meetingID: id, clubID: clubID}})}  className='options'>List of Activities</button>  
                                         <button type="button" onClick={(e) => navigate(-1)}  className='options'>Return to Club</button>    
                                 </div>
                         </div>
@@ -115,9 +155,9 @@ function Meetings() {
                                 <button type="button" onClick={(e) => null }  className='options'>{meeting.description}</button>
                             </div>
                         </div>
-                        <Attendees currentUser={currentUser} clubID={clubID} meetingID={id}/> 
-                    </div> 
-                <button type="button" onClick={ handleRSVPClick }  className='RSVP-button'>RSVP</button>
+                        <Attendees RSVPClicked={RSVPClicked} clubID={clubID} meetingID={id}/> 
+                    </div>  
+                <button type="button" onClick={handleRSVPClick}  className='RSVP-button'>RSVP</button>
                 </div>
             </div>
         </div>
