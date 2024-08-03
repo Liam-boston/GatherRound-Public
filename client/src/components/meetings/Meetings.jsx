@@ -1,11 +1,12 @@
 import "./Meetings.css"; 
 import React, {useEffect, useState} from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { doc, getDoc, setDoc} from "firebase/firestore";
-import { db } from "../../services/firebase"
-import { getAuth } from 'firebase/auth';
+import { db, auth} from "../../services/firebase"
+import { signOut, getAuth } from 'firebase/auth';
 import Attendees from "./Attendees";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
+import UserProfileModal from "../common/UserProfileModal";
 
 
 function Meetings() {
@@ -17,6 +18,8 @@ function Meetings() {
     const [member, setMember] = useState({});
     const [attendee, setAttendee] = useState();
     const [RSVPClicked, setRSVPClicked] = useState(null);
+    const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
+    const [userData, setUserData] = useState(null);
     const { id } = useParams();
     const { clubID, currentUserID } = state;
     const docRef = doc(db, "Clubs", clubID, "Meetings", id);
@@ -110,10 +113,32 @@ function Meetings() {
         setRSVPClicked(true);
     }
 
-    // Function to handle profile button click
-    const handleProfileClick = () => {
-        // TODO: Implement profile button click logic
-    };
+    const viewUserProfileModal = () => {
+        const docRef = doc(db, 'Users', currentUser.uid);
+        if (!userData) {
+            getDoc(docRef)
+                .then((snapshot) => {
+                    setUserData({
+                        name: snapshot.get('name'),
+                        email: snapshot.get('email')
+                    });
+                })
+                .catch(err => {
+                    console.log(err.message, err)
+                });
+        }
+
+        setShowUserProfileModal(true);
+    }
+
+    const closeUserProfileModal = () => {
+        setShowUserProfileModal(false);
+    }
+
+    const logOut = () => {
+        signOut(auth)
+        return <Navigate to="/" />;
+    }
 
 
         // Fetch current user from Firestore
@@ -132,11 +157,9 @@ function Meetings() {
         }, [currentUser]);
 
     
-    
-    
     return (
         <div>
-             <ProfileButton onClick={handleProfileClick} />
+             <ProfileButton onClick={viewUserProfileModal} />
             <div className='header'>
                 <h1>{meeting.date}</h1>
                 <div className='master-wrapper'>
@@ -159,6 +182,9 @@ function Meetings() {
                     </div>  
                 <button type="button" onClick={handleRSVPClick}  className='RSVP-button'>RSVP</button>
                 </div>
+            </div>
+            <div className="user-profile-modal">
+            <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
             </div>
         </div>
     );

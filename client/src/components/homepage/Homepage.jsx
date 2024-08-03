@@ -161,9 +161,9 @@ function Homepage() {
                         onClubCreated={handleClubCreation} // Pass down the handler
                     />
                 </div>
-                <div className="user-profile-modal">
-                    <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
-                </div>
+            </div>
+            <div className="user-profile-modal">
+            <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
             </div>
         </div>
     );

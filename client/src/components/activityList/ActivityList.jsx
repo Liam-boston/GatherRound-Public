@@ -1,12 +1,13 @@
 import "./ActivityList.css"; 
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../services/firebase"
-import { getAuth } from 'firebase/auth';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { db, auth } from "../../services/firebase"
+import { signOut, getAuth } from 'firebase/auth';
 import CreateButton from "../common/CreateButton/CreateButton";
 import CreateActivityModal from "./CreateActivityModal";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
+import UserProfileModal from "../common/UserProfileModal";
 
 
 
@@ -16,6 +17,8 @@ function ActivityList() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [activities, setActivities] = useState([]); // State to hold the list of clubs stored in Firestore
+    const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
+    const [userData, setUserData] = useState(null);
     const {state} = useLocation();
     const { meetingID, clubID } = state;
 
@@ -73,14 +76,36 @@ function ActivityList() {
         }, 3000); // Hide the message after 3 seconds
     };
 
-    // Function to handle profile button click
-    const handleProfileClick = () => {
-        // TODO: Implement profile button click logic
-    };
+    const viewUserProfileModal = () => {
+        const docRef = doc(db, 'Users', currentUser.uid);
+        if (!userData) {
+            getDoc(docRef)
+                .then((snapshot) => {
+                    setUserData({
+                        name: snapshot.get('name'),
+                        email: snapshot.get('email')
+                    });
+                })
+                .catch(err => {
+                    console.log(err.message, err)
+                });
+        }
+
+        setShowUserProfileModal(true);
+    }
+
+    const closeUserProfileModal = () => {
+        setShowUserProfileModal(false);
+    }
+
+    const logOut = () => {
+        signOut(auth)
+        return <Navigate to="/" />;
+    }
 
     return (
         <div>
-            <ProfileButton onClick={handleProfileClick} />
+            <ProfileButton onClick={viewUserProfileModal} />
             <div className='header'>
                 <h1>{meetingID}</h1>
                 <p>List of activities</p>
@@ -108,6 +133,9 @@ function ActivityList() {
                 <div className='create-club-modal'>
                     {/* Render the modal */}
                     <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubID={clubID} />
+                </div>
+                <div className="user-profile-modal">
+                <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
                 </div>
             </div>
         </div>

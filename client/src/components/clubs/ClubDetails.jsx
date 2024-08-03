@@ -1,13 +1,14 @@
 import "./ClubDetails.css"; 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
+import { signOut, getAuth } from 'firebase/auth';
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import CreateMeetingModal from "./CreateMeetingModal";
 import CreateButton from "../common/CreateButton/CreateButton"; 
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { db } from "../../services/firebase";
+import { doc, getDoc, collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { auth, db } from "../../services/firebase";
+import UserProfileModal from "../common/UserProfileModal";
 
 function ClubDetails() {
 
@@ -17,7 +18,9 @@ function ClubDetails() {
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [meetings, setMeetings] = useState([]); // State to hold the list of clubs stored in Firestore
+    const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
     const docRef = collection(db, "Clubs", id, "Meetings");
+    const [userData, setUserData] = useState(null);
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
@@ -54,10 +57,32 @@ function ClubDetails() {
     }, [currentUser]);
 
 
-    // Function to handle profile button click
-    const handleProfileClick = () => {
-        // TODO: Implement profile button click logic
-    };
+    const viewUserProfileModal = () => {
+        const docRef = doc(db, 'Users', currentUser.uid);
+        if (!userData) {
+            getDoc(docRef)
+                .then((snapshot) => {
+                    setUserData({
+                        name: snapshot.get('name'),
+                        email: snapshot.get('email')
+                    });
+                })
+                .catch(err => {
+                    console.log(err.message, err)
+                });
+        }
+
+        setShowUserProfileModal(true);
+    }
+
+    const closeUserProfileModal = () => {
+        setShowUserProfileModal(false);
+    }
+
+    const logOut = () => {
+        signOut(auth)
+        return <Navigate to="/" />;
+    }
 
     // Function to handle showing the modal
     const viewModal = () => {
@@ -80,7 +105,7 @@ function ClubDetails() {
 
     return (
             <div>
-                 <ProfileButton onClick={handleProfileClick} />
+                 <ProfileButton onClick={viewUserProfileModal} />
                 <div className='header'>
                     <h1>{id}</h1>
                 </div>
@@ -116,6 +141,9 @@ function ClubDetails() {
                                 {/* Render the modal */}
                                 <CreateMeetingModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} />
                             </div>
+                    </div>
+                    <div className="user-profile-modal">
+                    <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
                     </div>
                 </div>
             </div>
