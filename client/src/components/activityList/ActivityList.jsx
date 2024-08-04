@@ -55,7 +55,7 @@ function ActivityList() {
             };
     
             fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
-        }, [currentUser]);
+        }, [currentUser, showModal]);
 
     // Function to handle showing the modal
     const viewModal = () => {

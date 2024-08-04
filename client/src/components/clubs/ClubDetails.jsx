@@ -54,7 +54,7 @@ function ClubDetails() {
         };
 
         fetchMeetings(); // Call fetchMeetings when component mounts or currentUser changes
-    }, [currentUser]);
+    }, [currentUser, showUserProfileModal]);
 
 
     const viewUserProfileModal = () => {
