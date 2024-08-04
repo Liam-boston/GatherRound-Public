@@ -134,9 +134,9 @@ function ActivityList() {
                     {/* Render the modal */}
                     <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubID={clubID} />
                 </div>
-                <div className="user-profile-modal">
-                <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
-                </div>
+            </div>
+            <div className="user-profile-modal">
+            <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
             </div>
         </div>
     );

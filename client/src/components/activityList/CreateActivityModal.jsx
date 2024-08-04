@@ -25,7 +25,7 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID })
             name: activityName,
             description: activityDescription,
             creator: [currentUser.uid], // Add the current user to the creator list
-            votes: 0, // Initialize an empty voters list
+            votes: [], // Initialize an empty voters list
             minPlayers: activityMinPlayers,
             maxPlayers: activityMaxPlayers,
             createdAt: new Date() // Set the creation date 
