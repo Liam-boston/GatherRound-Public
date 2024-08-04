@@ -17,9 +17,9 @@ function ClubDetails() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const [message, setMessage] = useState(null); // State to hold the success or failure message
-    const [meetings, setMeetings] = useState([]); // State to hold the list of clubs stored in Firestore
+    const [meetings, setMeetings] = useState([]); // State to hold the list of meetings stored in Firestore
     const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
-    const docRef = collection(db, "Clubs", id, "Meetings");
+    const docRef1 = collection(db, "Clubs", id, "Meetings");
     const [userData, setUserData] = useState(null);
 
     // Fetch the current user from Firebase Auth
@@ -41,7 +41,7 @@ function ClubDetails() {
     useEffect(() => {
         const fetchMeetings = async () => {
             try {
-                const querySnapshot = await getDocs(query(docRef, orderBy('createdAt'))); // Fetch the Meetings collection
+                const querySnapshot = await getDocs(query(docRef1, orderBy('createdAt'))); // Fetch the Meetings collection
                 const meetingsList = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
@@ -54,7 +54,7 @@ function ClubDetails() {
         };
 
         fetchMeetings(); // Call fetchMeetings when component mounts or currentUser changes
-    }, [currentUser, showUserProfileModal]);
+    }, [currentUser, showModal]);
 
 
     const viewUserProfileModal = () => {

@@ -92,8 +92,6 @@ function Meetings() {
         attendeeCheck(); 
     }, [RSVPClicked]);
 
-
-
     const handleRSVPClick = async (e) => {
         e.preventDefault(); 
         const data = {
@@ -141,20 +139,20 @@ function Meetings() {
     }
 
 
-        // Fetch current user from Firestore
-        useEffect(() => {
-            const fetchMember = async () => {
-                try {
-                    const tempData = await getDoc(docRef2); 
-                    setMember(tempData.data()); 
-                    console.log(member);
-                } catch (error) {
-                    console.error("Error fetching meeting: ", error);
-                }
-            };
-    
-            fetchMember(); 
-        }, [currentUser]);
+    // Fetch current user from Firestore
+    useEffect(() => {
+        const fetchMember = async () => {
+            try {
+                const tempData = await getDoc(docRef2); 
+                setMember(tempData.data()); 
+                console.log(member);
+            } catch (error) {
+                console.error("Error fetching meeting: ", error);
+            }
+        };
+
+        fetchMember(); 
+    }, [currentUser]);
 
     
     return (
