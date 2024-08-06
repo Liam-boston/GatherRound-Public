@@ -1,7 +1,7 @@
 import "./Vote.css"; 
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../services/firebase"
 import { signOut, getAuth } from 'firebase/auth';
 import CreateButton from "../common/CreateButton/CreateButton";
@@ -104,7 +104,7 @@ function Vote() {
         return <Navigate to="/" />;
     }
 
-    const submitVote = () => {
+    const submitVote = async () => {
         // Pre-process data
         const activityMap = new Map();
         activitiesList.forEach(activity => activityMap.set(
@@ -154,8 +154,17 @@ function Vote() {
             }
         }
 
-        // Prepare data to update
+        // Update data
+        for(const [id, activity] of newActivities){
+            await updateDoc(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities", id), {
+                minPlayers: activity.min,
+                maxPlayers: activity.max,
+                selected: activity.selected,
+                votes: activity.votes
+            });     
+        }
         
+        navigate('../ActivityList', {relative: path});
     }
 
     return (
