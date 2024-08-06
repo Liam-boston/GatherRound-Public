@@ -22,8 +22,8 @@ function Meetings() {
     const [userData, setUserData] = useState(null);
     const { id } = useParams();
     const { clubID, currentUserID } = state;
-    const docRef = doc(db, "Clubs", clubID, "Meetings", id);
-    const docRef2 = doc(db, "Clubs", clubID, "Members", currentUserID);
+    const meetingRef = doc(db, "Clubs", clubID, "Meetings", id);
+    const userRef = doc(db, "Clubs", clubID, "Members", currentUserID);
 
 
     // Fetch the current user from Firebase Auth
@@ -46,7 +46,7 @@ function Meetings() {
     useEffect(() => {
         const fetchMeeting = async () => {
             try {
-                const tempData = await getDoc(docRef); // Fetch the Meeting
+                const tempData = await getDoc(meetingRef); // Fetch the Meeting
                 setMeeting(tempData.data()); // Update state with fetched meeting
                 console.log(meeting);
             } catch (error) {
@@ -61,7 +61,7 @@ function Meetings() {
     useEffect(() => {
         const fetchMember = async () => {
             try {
-                const tempData = await getDoc(docRef2); 
+                const tempData = await getDoc(userRef); 
                 setMember(tempData.data()); 
                 console.log(member);
             } catch (error) {
@@ -145,7 +145,7 @@ function Meetings() {
         useEffect(() => {
             const fetchMember = async () => {
                 try {
-                    const tempData = await getDoc(docRef2); 
+                    const tempData = await getDoc(userRef); 
                     setMember(tempData.data()); 
                     console.log(member);
                 } catch (error) {

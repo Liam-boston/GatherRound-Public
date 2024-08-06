@@ -8,7 +8,7 @@ import LoginSignup from './components/auth/LoginSignup'
 import EmailVerification from "./components/auth/EmailVerification";
 import Homepage from "./components/homepage/Homepage";
 import ClubDetails from "./components/clubs/ClubDetails";
-import MemberList from "./components/MemberList/MemberList";
+import MemberList from "./components/memberList/MemberList";
 import ActivityList from "./components/activityList/ActivityList";
 import Meetings from "./components/meetings/Meetings";
 

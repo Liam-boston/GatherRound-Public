@@ -1,7 +1,7 @@
 import React, { act } from 'react';
 import Homepage from '../../homepage/Homepage';
 import ClubDetails from '../../clubs/ClubDetails'
-import MemberList from '../../MemberList/MemberList';
+import MemberList from '../../memberList/MemberList';
 import { getDocs, updateDoc, arrayRemove } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
