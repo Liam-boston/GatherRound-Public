@@ -65,19 +65,19 @@
     background-color: #f8d7da; /* Light red background */
 }
 
-.activity-button {
-    background-color: #d3d3d3; /* Light gray color */
+.vote-button {
+    width: 200px;
+    height: 45px;
+    background: #186e3c;
     border: none;
-    border-radius: 10px;
-    padding: 15px 30px;
-    margin: 10px 0;
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold font */
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    width: 90%; /* Adjust the width to your preference */
-    transition: background-color 0.3s ease; /* Smooth transition effect */
-}
-
-.activity-button:hover {
-    background-color: #b0b0b0; /* Darker gray on hover */
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 45px;
 }
