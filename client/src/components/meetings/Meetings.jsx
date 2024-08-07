@@ -72,6 +72,7 @@ function Meetings() {
         fetchMember(); 
     }, [currentUser]);
 
+
     // Fetch attendee status from Firestore
     useEffect(() => {
         const attendeeCheck = async () => {
@@ -138,23 +139,6 @@ function Meetings() {
         return <Navigate to="/" />;
     }
 
-
-    // Fetch current user from Firestore
-    useEffect(() => {
-        const fetchMember = async () => {
-            try {
-                const tempData = await getDoc(docRef2); 
-                setMember(tempData.data()); 
-                console.log(member);
-            } catch (error) {
-                console.error("Error fetching meeting: ", error);
-            }
-        };
-
-        fetchMember(); 
-    }, [currentUser]);
-
-    
     return (
         <div>
              <ProfileButton onClick={viewUserProfileModal} />
