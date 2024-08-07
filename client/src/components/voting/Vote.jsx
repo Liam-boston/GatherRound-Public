@@ -1,15 +1,13 @@
-import "./Vote.css"; 
+import "./Vote.css";
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../services/firebase"
 import { signOut, getAuth } from 'firebase/auth';
 import CreateButton from "../common/CreateButton/CreateButton";
-import CreateActivityModal from "./CreateActivityModal";
+import CreateActivityModal from "../activityList/CreateActivityModal";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import UserProfileModal from "../common/UserProfileModal";
-
-
 
 function Vote() {
     const navigate = useNavigate();
@@ -17,12 +15,11 @@ function Vote() {
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [message, setMessage] = useState(null); // State to hold the success or failure message
     const [activities, setActivities] = useState([]); // State to hold the list of clubs stored in Firestore
-    const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
+    const [showUserProfileModal, setShowUserProfileModal] = useState(false);
     const [userData, setUserData] = useState(null);
-    const {state} = useLocation();
+    const { state } = useLocation();
     const { meetingID, clubID } = state;
-    const [votes, setVotes] = userState([]);
-
+    const [votes, setVotes] = useState([]);
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
@@ -40,23 +37,23 @@ function Vote() {
         return () => unsubscribe();
     }, []);
 
-        // Fetch clubs from Firestore
-        useEffect(() => {
-            const fetchActivities = async () => {
-                try {
-                    const querySnapshot = await getDocs(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities")); // Fetch the Activities collection
-                    const activitiesList = querySnapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-                    setActivities(activitiesList); // Update state with fetched activities
-                } catch (error) {
-                    console.error("Error fetching activities: ", error);
-                }
-            };
-    
-            fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
-        }, [currentUser]);
+    // Fetch clubs from Firestore
+    useEffect(() => {
+        const fetchActivities = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities")); // Fetch the Activities collection
+                const activitiesList = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setActivities(activitiesList); // Update state with fetched activities
+            } catch (error) {
+                console.error("Error fetching activities: ", error);
+            }
+        };
+
+        fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
+    }, [currentUser]);
 
     // Function to handle showing the modal
     const viewModal = () => {
@@ -107,7 +104,7 @@ function Vote() {
     const submitVote = async () => {
         // Pre-process data
         const activityMap = new Map();
-        activitiesList.forEach(activity => activityMap.set(
+        activities.forEach(activity => activityMap.set(
             activity.id,
             {
                 min: activity.minPlayers,
@@ -120,9 +117,9 @@ function Vote() {
         // Tally votes
         const newActivities = activityMap;
         const decidedParticipants = [];
-        for(let vote of votes){
+        for (let vote of votes) {
             let activity = newActivities.get(vote);
-            if(activity.votes.length + 1 == activity.min){
+            if (activity.votes.length + 1 == activity.min) {
                 activity = {
                     ...activity,
                     selected: true,
@@ -130,7 +127,7 @@ function Vote() {
                 };
                 decidedParticipants = activity.votes;
                 break;
-            }else{
+            } else {
                 activity = {
                     ...activity,
                     votes: activity.votes.push(currentUser.uid)
@@ -140,9 +137,9 @@ function Vote() {
         }
 
         // Remove if decided
-        if(decidedParticipants.length > 0){
+        if (decidedParticipants.length > 0) {
             const cleanActivities = newActivities; //rename variable?
-            for(const [id, activity] in cleanActivities){
+            for (const [id, activity] in cleanActivities) {
                 let newVotes = activity.votes.filter((vote) => {
                     return !decidedParticipants.includes(vote);
                 });
@@ -155,16 +152,17 @@ function Vote() {
         }
 
         // Update data
-        for(const [id, activity] of newActivities){
+        for (const [id, activity] of newActivities) {
             await updateDoc(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities", id), {
                 minPlayers: activity.min,
                 maxPlayers: activity.max,
                 selected: activity.selected,
                 votes: activity.votes
-            });     
+            });
         }
-        
-        navigate('../ActivityList', {relative: path});
+
+        // Navigate back to ActivityList
+        navigate(`/Homepage/Clubs/${clubID}/${meetingID}/ActivityList`);
     }
 
     return (
@@ -173,7 +171,7 @@ function Vote() {
             <div className='header'>
                 <h1>{meetingID}</h1>
                 <p>List of activities</p>
-                <button onClick={(e) => navigate(-1)}> Back to Meeting Page </button>
+                <button onClick={(e) => navigate(-1)}> Back to Activity List </button>
             </div>
             <div className='activity-wrapper'>
                 <div className='scrollable-list'>
@@ -199,7 +197,7 @@ function Vote() {
                     <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubID={clubID} />
                 </div>
                 <div className="user-profile-modal">
-                <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
+                    <UserProfileModal show={showUserProfileModal} onClose={closeUserProfileModal} logOut={logOut} userData={userData} />
                 </div>
             </div>
         </div>
