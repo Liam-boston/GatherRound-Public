@@ -9,19 +9,27 @@
     padding: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example shadow size and color */
     margin: 0;
-  }
-  
-  .header p {
-    font-size: 24px;
+}
+
+.subtitle {
+    font-size: 30px;
     color: #fff;
+    margin-bottom: 20px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Example shadow size and color */
-    margin-top: -30px;
-    margin-bottom: 10px;
-  }
-  
-.activity-wrapper {
-    position: relative;
-    width: 650px;
+}
+
+.wrapper-container {
+    display: flex;
+    flex-direction: row; /* Ensure children are aligned side by side */
+    justify-content: space-between; /* Space between items */
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px; /* Space between the wrappers */
+}
+
+.instructions-wrapper {
+    width: 500px; /* Adjusted width */
+    height: 380px;
     background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px); /* Blur effect for background */
@@ -31,53 +39,104 @@
     overflow-y: auto; /* Enable vertical scrolling if needed */
     display: flex;
     flex-direction: column; /* Stack form-boxes vertically */
-    align-items: center; /* Center align items horizontally */
+    align-items: center; /* Center items horizontally */
+    justify-content: flex-start; /* Align items at the top */
+    padding: 20px; /* Add some padding for aesthetics */
+    box-sizing: border-box;
+}
+
+.activity-wrapper {
+    width: 650px; /* Keep width at 650px */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px); /* Blur effect for background */
+    border-radius: 10px;
+    color: #186e3c; /* Darker green color */
+    overflow: hidden; /* Ensure content doesn't overflow the container */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    display: flex;
+    flex-direction: column; /* Stack form-boxes vertically */
+    align-items: center; /* Center items horizontally */
     justify-content: center; /* Center align items vertically */
     padding: 20px; /* Add some padding for aesthetics */
+    box-sizing: border-box;
+}
+
+.instructions-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.instructions-wrapper ul {
+    list-style-type: disc; /* Display bullet points */
+    padding-left: 20px; /* Add padding for left alignment */
+    margin: 0;
+    color: white; /* White color for text */
+    text-align: left; /* Left-align text */
+}
+
+.instructions-wrapper li {
+    margin-bottom: 10px; /* Space between list items */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Align buttons horizontally with space between */
+    margin-top: 20px; /* Space between list and buttons */
+}
+
+.submit-votes {
+    width: 200px;
+    height: 45px;
+    background: #186e3c;
+    border: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.submit-votes:hover {
+    background-color: #145a29; /* Darker green on hover */
 }
 
 .scrollable-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Align items to the start */
     width: 100%;
     min-height: 200px;
-    max-height: 475px; /* Adjust this height to show only the first 4 elements */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    max-height: 475px;
+    overflow: visible;
+    overflow-y: auto;
     margin-bottom: 15px;
     margin-top: 15px;
 }
 
-.message {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.message.success {
-    color: #186e3c; /* Green color */
-    background-color: #d4edda; /* Light green background */
-}
-
-.message.error {
-    color: #d9534f; /* Red color */
-    background-color: #f8d7da; /* Light red background */
-}
-
-.activity-button {
-    background-color: #d3d3d3; /* Light gray color */
+.reorderable-voting-button {
+    background-color: #d3d3d3;
+    color: black;
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
     margin: 10px 0;
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold font */
+    font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
-    width: 90%; /* Adjust the width to your preference */
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box; /* Include padding and border in width */
     transition: background-color 0.3s ease; /* Smooth transition effect */
+    position: relative;
+    top: auto !important;
+    left: auto !important;
 }
 
-.activity-button:hover {
+.reorderable-voting-button:hover {
     background-color: #b0b0b0; /* Darker gray on hover */
 }
