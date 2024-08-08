@@ -130,7 +130,9 @@ function ActivityList() {
               <div className="activity-name-container">
                 <div className="activity-name">{activity.name}</div>
                 <div className="activity-information">
-                  Players: {activity.minPlayers}-{activity.maxPlayers}
+                  Players: {activity.minPlayers === activity.maxPlayers
+                    ? activity.minPlayers
+                    : `${activity.minPlayers}-${activity.maxPlayers}`}
                 </div>
               </div>
                 <div className="activity-description">
