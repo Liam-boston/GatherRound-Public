@@ -117,47 +117,71 @@ function ActivityList() {
       state: { clubID, currentUserID }
     });
   };
+  };
 
   return (
-    <div>
+    <div className="activity-list-container">
       <ProfileButton onClick={viewUserProfileModal} />
       <div className="header">
         <h1>{meetingID}</h1>
         <p>List of activities</p>
         <button onClick={handleMeetingClick}> Back to Meeting Page </button>
       </div>
-      <div className="activity-wrapper">
-        <div className="scrollable-list">
-          {/* Scrollable list of club buttons */}
-          {activities.map((activity, index) => (
-            <button
-              onClick={(e) => null}
-              key={index}
-              className="club-button"
-            >
-              {activity.name} | Min-Max: {activity.minPlayers}-
-              {activity.maxPlayers} | Description: {activity.description}
-            </button>
-            // Mapping through tempClubList to create club buttons
-          ))}
+
+      {/* Wrapper container for activity list and voting instructions */}
+      <div className="wrapper-container">
+        <div className="activity-list-wrapper">
+          <div className="scrollable-activity-list">
+            {activities.map((activity, index) => (
+              <button
+                onClick={(e) => null}
+                key={index}
+                className="activity-button"
+              >
+                <div className="activity-details">
+                  <div className="activity-name-container">
+                    <div className="activity-name">{activity.name}</div>
+                    <div className="activity-information">
+                      Players: {activity.minPlayers === activity.maxPlayers
+                        ? activity.minPlayers
+                        : `${activity.minPlayers}-${activity.maxPlayers}`}
+                    </div>
+                  </div>
+                  <div className="activity-description">
+                    {activity.description}
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+          {message && (
+            <div className={`message ${message.type}`}>{message.text}</div>
+          )}
+          <div className="create-activity">
+            <CreateButton onClick={viewModal} />
+          </div>
+          <div className="create-activity-modal">
+            <CreateActivityModal show={showModal} onClose={closeModal} setMessage={handleSetMessage} currentUser={currentUser} clubID={clubID} />
+          </div>
         </div>
-        {/* Display the success or failure message upon club creation */}
-        {message && (
-          <div className={`message ${message.type}`}>{message.text}</div>
-        )}
-        <div className="vote-button-wrapper">
-          <button className="vote-button" onClick={handleVoteClick}>
-            Vote
-          </button>
+        <div className="voting-instructions">
+          <p className="voting-instructions-title"><u>Proceed to vote?</u></p>
+          <ul>
+            <li>Check out the games being brought to the meeting in the list to the left.</li>
+            <li>If you want to offer a game of your own you can add it to the list with the Create (+) button.</li>
+            <li>When you're ready, click the 'Vote' button below to choose which activities you want to play!</li>
+          </ul>
+          <button className="vote-button" onClick={handleVoteClick}>Vote</button>
         </div>
-        <div className="user-profile-modal">
-          <UserProfileModal
-            show={showUserProfileModal}
-            onClose={closeUserProfileModal}
-            logOut={logOut}
-            userData={userData}
-          />
-        </div>
+
+      </div>
+      <div className="user-profile-modal">
+        <UserProfileModal
+          show={showUserProfileModal}
+          onClose={closeUserProfileModal}
+          logOut={logOut}
+          userData={userData}
+        />
       </div>
     </div>
   );

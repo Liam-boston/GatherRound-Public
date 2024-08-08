@@ -17,7 +17,7 @@ function Vote() {
     const [voted, setVoted] = useState(false);
     const { state } = useLocation();
     const { meetingID, clubID } = state;
-    
+
 
     // Fetch the current user from Firebase Auth
     useEffect(() => {
@@ -152,7 +152,7 @@ function Vote() {
         if (decidedParticipants.length > 0) {
             const cleanActivities = new Map(newActivities); //rename variable?
             for (const [id, activity] of cleanActivities) {
-                if(!activity.selected){
+                if (!activity.selected) {
                     let newVotes = activity.votes.filter((vote) => {
                         return !decidedParticipants.includes(vote);
                     });
@@ -220,8 +220,31 @@ function Vote() {
                                                         {...provided.dragHandleProps}
                                                         className="reorderable-voting-button"
                                                     >
-                                                        {activity.name} | Min-Max: {activity.minPlayers}-
-                                                        {activity.maxPlayers} | Description: {activity.description}
+                                                        <div className="activity-details">
+                                                            <div className="activity-name-container">
+                                                                <div className="activity-name">{activity.name}</div>
+                                                                <span className={`medal-icon ${index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : ''}`}>
+                                                                    {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : ''}
+                                                                </span>
+                                                                <div className="activity-status">
+                                                                    Status:
+                                                                    <span className={`is-selected ${activity.selected ? 'active' : 'is-not-selected'}`}>
+                                                                        {activity.selected ? ' Selected' : ' Not Selected'}
+                                                                    </span>
+                                                                    <span className={`is-full ${activity.votes.length >= activity.maxPlayers ? 'active' : ''}`}>
+                                                                        {activity.votes.length >= activity.maxPlayers ? ' Full' : ''}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="activity-info">
+                                                                Players: {activity.minPlayers === activity.maxPlayers
+                                                                    ? activity.minPlayers 
+                                                                    : `${activity.minPlayers}-${activity.maxPlayers}`} | Votes: {activity.votes.length}
+                                                            </div>
+                                                            <div className="activity-description">
+                                                                {activity.description}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 )}
                                             </Draggable>

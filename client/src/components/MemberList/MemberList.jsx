@@ -5,7 +5,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { auth } from "../../services/firebase"
 import { signOut, getAuth } from 'firebase/auth';
-import InviteModal from "../memberList/InviteModal";
+import InviteModal from "../MemberList/InviteModal";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import UserProfileModal from "../common/UserProfileModal";
 
