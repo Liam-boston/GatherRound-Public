@@ -117,7 +117,6 @@ function ActivityList() {
       state: { clubID, currentUserID }
     });
   };
-  };
 
   return (
     <div className="activity-list-container">
