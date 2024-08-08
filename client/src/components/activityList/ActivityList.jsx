@@ -117,19 +117,27 @@ function ActivityList() {
         <p>List of activities</p>
         <button onClick={() => navigate(-1)}> Back to Meeting Page </button>
       </div>
-      <div className="activity-wrapper">
+      <div className="activity-list-wrapper">
         <div className="scrollable-list">
-          {/* Scrollable list of club buttons */}
+          {/* Scrollable list of activities */}
           {activities.map((activity, index) => (
             <button
               onClick={(e) => null}
               key={index}
-              className="club-button"
+              className="activity-button"
             >
-              {activity.name} | Min-Max: {activity.minPlayers}-
-              {activity.maxPlayers} | Description: {activity.description}
+              <div className="activity-details">
+              <div className="activity-name-container">
+                <div className="activity-name">{activity.name}</div>
+                <div className="activity-information">
+                  Players: {activity.minPlayers}-{activity.maxPlayers}
+                </div>
+              </div>
+                <div className="activity-description">
+                  {activity.description}
+                </div>
+              </div>
             </button>
-            // Mapping through tempClubList to create club buttons
           ))}
         </div>
         {/* Display the success or failure message upon club creation */}
@@ -151,7 +159,7 @@ function ActivityList() {
         </div>
       </div>
     </div>
-  );
+  );  
 }
 
 export default ActivityList;

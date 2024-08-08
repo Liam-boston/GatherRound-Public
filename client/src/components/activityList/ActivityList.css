@@ -19,21 +19,22 @@
     margin-bottom: 10px;
   }
   
-.activity-wrapper {
+  .activity-list-wrapper {
     position: relative;
-    width: 650px;
-    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    width: 650px; /* Ensure this is the desired width */
+    background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px); /* Blur effect for background */
+    backdrop-filter: blur(30px);
     border-radius: 10px;
-    color: #186e3c; /* Darker green color */
-    overflow: hidden; /* Ensure content doesn't overflow the container */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    color: #186e3c;
+    overflow: hidden;
+    overflow-y: auto;
     display: flex;
-    flex-direction: column; /* Stack form-boxes vertically */
-    align-items: center; /* Center align items horizontally */
-    justify-content: center; /* Center align items vertically */
-    padding: 20px; /* Add some padding for aesthetics */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 0 auto; /* Center horizontally within parent container */
 }
 
 .scrollable-list {
@@ -46,6 +47,58 @@
     overflow-y: auto; /* Enable vertical scrolling if needed */
     margin-bottom: 15px;
     margin-top: 15px;
+}
+
+.activity-button {
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+    align-items: flex-start; /* Align items to the left */
+    background-color: #d3d3d3;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    color: black;
+    overflow: hidden;
+    padding: 15px;
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left; /* Align text to the left */
+    transition: background-color 0.3s ease;
+}
+
+.activity-details {
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+    width: 100%; /* Ensure full width */
+}
+
+.activity-name-container {
+    display: flex;
+    align-items: center; /* Center align items vertically */
+    justify-content: space-between; /* Space out name and info */
+    width: 100%; /* Ensure full width */
+}
+
+.activity-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.activity-information {
+    font-size: 14px;
+    color: #666;
+    text-align: right; /* Align text to the right */
+}
+
+.activity-description {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px; /* Space between info and description */
 }
 
 .message {
