@@ -12,7 +12,7 @@ import UserProfileModal from "../common/UserProfileModal";
 function Meetings() {
 
     const navigate = useNavigate();
-    const {state} = useLocation();console.log(state);
+    const {state} = useLocation();
     const [currentUser, setCurrentUser] = useState(null); // State to store the current user
     const [meeting, setMeeting] = useState({});
     const [member, setMember] = useState({});
@@ -21,9 +21,9 @@ function Meetings() {
     const [showUserProfileModal, setShowUserProfileModal] = useState(false);
     const [userData, setUserData] = useState(null);
     const { id } = useParams();
-    const { clubID, currentUserID } = state;console.log(currentUserID);
+    const { clubID, currentUserID } = state;
     const meetingRef = doc(db, "Clubs", clubID, "Meetings", id);
-    const userRef = doc(db, "Clubs", clubID, "Members", currentUserID);console.log(userRef);
+    const userRef = doc(db, "Clubs", clubID, "Members", currentUserID);
 
 
     // Fetch the current user from Firebase Auth
