@@ -10,6 +10,7 @@ import ProfileButton from "../common/ProfileButton/ProfileButton";
 import UserProfileModal from "../common/UserProfileModal";
 
 function ActivityList() {
+  console.log('activities');
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [currentUser, setCurrentUser] = useState(null); // State to store the current user
@@ -105,9 +106,17 @@ function ActivityList() {
   // Function to navigate to the Vote page
   const handleVoteClick = () => {
     navigate(`/Homepage/Clubs/${clubID}/${meetingID}/Vote`, {
-      state: { meetingID, clubID },
+      state: { meetingID, clubID }
     });
   };  
+
+  // Funciton to navigate to the Meeting page
+  const handleMeetingClick = () => {
+    const currentUserID = currentUser.uid;
+    navigate(`/Homepage/Clubs/${clubID}/${meetingID}/`, {
+      state: { clubID, currentUserID }
+    });
+  };
 
   return (
     <div>
@@ -115,7 +124,7 @@ function ActivityList() {
       <div className="header">
         <h1>{meetingID}</h1>
         <p>List of activities</p>
-        <button onClick={() => navigate(-1)}> Back to Meeting Page </button>
+        <button onClick={handleMeetingClick}> Back to Meeting Page </button>
       </div>
       <div className="activity-wrapper">
         <div className="scrollable-list">

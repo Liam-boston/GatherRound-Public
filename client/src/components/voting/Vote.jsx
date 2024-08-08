@@ -14,6 +14,7 @@ function Vote() {
     const [activities, setActivities] = useState([]); // State to hold the list of clubs stored in Firestore
     const [showUserProfileModal, setShowUserProfileModal] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [voted, setVoted] = useState(false);
     const { state } = useLocation();
     const { meetingID, clubID } = state;
     
@@ -49,7 +50,13 @@ function Vote() {
             }
         };
 
-        fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
+        for(let activity of activities){
+            if(activity.votes.includes(currentUser.uid)){
+                setVoted(true);
+            }
+        }
+
+        if(!voted) fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
     }, [currentUser, clubID, meetingID]);
 
     const viewUserProfileModal = () => {
@@ -170,8 +177,15 @@ function Vote() {
         }
 
         // Navigate back to ActivityList
-        navigate("../ActivityList", { relative: 'path', state: {meetingID: meetingID, clubID: clubID}})
+        navigate("../ActivityList", { relative: 'path', state: {meetingID: meetingID, clubID: clubID}});
     }
+
+    // Function to navigate to the Vote page
+    const handleActivityListClick = () => {
+        navigate(`/Homepage/Clubs/${clubID}/${meetingID}/ActivityList`, {
+        state: { meetingID, clubID },
+        });
+    }; 
 
     return (
         <div>
@@ -179,10 +193,11 @@ function Vote() {
             <div className="header">
                 <h1>Activity Selection</h1>
                 <p className="subtitle">Cast your votes!</p>
-                <button onClick={(e) => navigate(-1)}> Back to Activity List </button>
+                <button onClick={handleActivityListClick}> Back to Activity List </button>
             </div>
 
             {/* Wrapper container for instructions and activity list */}
+            {!voted ? (
             <div className="wrapper-container">
                 <div className="activity-wrapper">
 
@@ -195,8 +210,9 @@ function Vote() {
                                     {...provided.droppableProps}
                                 >
                                     <div className="scrollable-list">
-                                        {activities.map((activity, index) => (
-                                            <Draggable key={activity.id} draggableId={activity.id} index={index}>
+                                        {activities.filter((activity) => activity.votes.length<activity.maxPlayers)
+                                        .map((activity, index) => {
+                                            return <Draggable key={activity.id} draggableId={activity.id} index={index}>
                                                 {(provided) => (
                                                     <div
                                                         ref={provided.innerRef}
@@ -209,7 +225,7 @@ function Vote() {
                                                     </div>
                                                 )}
                                             </Draggable>
-                                        ))}
+                                        })}
                                         {provided.placeholder}
                                     </div>
                                 </div>
@@ -248,7 +264,9 @@ function Vote() {
                         <button className="submit-votes" onClick={submitVote}>Submit</button>
                     </div>
                 </div>
-            </div>
+            </div>) : (
+            <div className="already-voted-message">You already voted</div>
+            )}
         </div>
     );
 }
