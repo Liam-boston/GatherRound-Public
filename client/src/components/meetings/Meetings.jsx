@@ -140,6 +140,7 @@ function Meetings() {
         return <Navigate to="/" />;
     }
 
+
     return (
         <div>
              <ProfileButton onClick={viewUserProfileModal} />
