@@ -121,40 +121,78 @@
 
 .reorderable-voting-button {
     display: flex;
-    align-items: center; /* Vertically center the content */
-    justify-content: flex-start; /* Align content to the start (left) */
+    align-items: center; /* Center items vertically */
     background-color: #d3d3d3;
     color: black;
     border: none;
     border-radius: 10px;
-    padding: 15px 30px;
+    padding: 15px;
     margin: 5px 0;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    width: 100%; /* Ensure full width */
+    width: 95%; /* Ensure full width */
     box-sizing: border-box; /* Include padding and border in width */
     transition: background-color 0.3s ease; /* Smooth transition effect */
-    position: relative;
-    top: auto !important;
-    left: auto !important;
+    text-align: left; /* Align text to the left */
 }
 
-.reorderable-voting-button:hover {
-    background-color: #b0b0b0; /* Darker gray on hover */
+.activity-details {
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+    flex-grow: 1; /* Take up remaining space */
+    width: 100%; /* Ensure full width */
 }
 
-.reorderable-voting-button:first-child::before {
-    content: "🥇"; /* Gold Medal for the first item */
-    margin-right: 10px;
+.activity-name-container {
+    display: flex;
+    align-items: center; /* Center align items vertically */
+    width: 100%; /* Ensure full width */
+    justify-content: space-between; /* Distribute space between activity name and medal */
 }
 
-.reorderable-voting-button:nth-child(2)::before {
-    content: "🥈"; /* Silver Medal for the second item */
-    margin-right: 10px;
+.activity-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px; /* 10px space between activity name and medal */
 }
 
-.reorderable-voting-button:nth-child(3)::before {
-    content: "🥉"; /* Bronze Medal for the third item */
-    margin-right: 10px;
+.medal-icon {
+    font-size: 24px; /* Size of the medal icon */
+    line-height: 1; /* Align icons vertically */
+}
+
+.activity-status {
+    font-size: 14px;
+    color: #444;
+    text-align: right; /* Align text to the right */
+    white-space: nowrap; /* Prevent text from wrapping */
+    margin-left: auto; /* Push the status to the right */
+}
+
+.activity-info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.activity-description {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.is-selected {
+    color: green; 
+    font-weight: bold;
+}
+
+.is-not-selected {
+    color: #FFBF00; 
+    font-weight: bold;
+}
+.is-full {
+    color: red;
+    font-weight: bold;
 }
