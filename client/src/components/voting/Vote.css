@@ -120,12 +120,15 @@
 }
 
 .reorderable-voting-button {
+    display: flex;
+    align-items: center; /* Vertically center the content */
+    justify-content: flex-start; /* Align content to the start (left) */
     background-color: #d3d3d3;
     color: black;
     border: none;
     border-radius: 10px;
     padding: 15px 30px;
-    margin: 10px 0;
+    margin: 5px 0;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
@@ -139,4 +142,19 @@
 
 .reorderable-voting-button:hover {
     background-color: #b0b0b0; /* Darker gray on hover */
+}
+
+.reorderable-voting-button:first-child::before {
+    content: "🥇"; /* Gold Medal for the first item */
+    margin-right: 10px;
+}
+
+.reorderable-voting-button:nth-child(2)::before {
+    content: "🥈"; /* Silver Medal for the second item */
+    margin-right: 10px;
+}
+
+.reorderable-voting-button:nth-child(3)::before {
+    content: "🥉"; /* Bronze Medal for the third item */
+    margin-right: 10px;
 }
