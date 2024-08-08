@@ -222,7 +222,7 @@ function Vote() {
 
                                                             </div>
                                                             <div className="activity-info">
-                                                                Players: {activity.minPlayers} - {activity.maxPlayers} | Votes: {activity.votes.length}
+                                                                Players: {activity.minPlayers}-{activity.maxPlayers} | Votes: {activity.votes.length}
                                                             </div>
                                                             <div className="activity-description">
                                                                 {activity.description}
