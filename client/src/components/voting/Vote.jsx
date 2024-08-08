@@ -16,7 +16,6 @@ function Vote() {
     const [userData, setUserData] = useState(null);
     const { state } = useLocation();
     const { meetingID, clubID } = state;
-    const [votes, setVotes] = useState([]);
     
 
     // Fetch the current user from Firebase Auth
@@ -51,7 +50,7 @@ function Vote() {
         };
 
         fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
-    }, [currentUser]);
+    }, [currentUser, clubID, meetingID]);
 
     const viewUserProfileModal = () => {
         const docRef = doc(db, 'Users', currentUser.uid);
@@ -99,8 +98,7 @@ function Vote() {
 
         // After a user has reordered the activities, the activities state should reflect the new order. 
         // You can simply slice the first 3 items from this array to get the top 3 choices.
-        const topThreeChoices = activities.slice(0, 3).map(activity => activity.id);
-        console.log(topThreeChoices);
+        const votes = activities.slice(0, 3).map(activity => activity.id);
 
         // Pre-process data
         const activityMap = new Map();
@@ -114,46 +112,56 @@ function Vote() {
             }
         ));
 
+        console.log(activityMap);
+
         // Tally votes
-        const newActivities = activityMap;
-        const decidedParticipants = [];
+        const newActivities = new Map(activityMap);
+        let decidedParticipants = [];
+
         for (let vote of votes) {
-            let activity = newActivities.get(vote);
-            if (activity.votes.length + 1 == activity.min) {
-                activity = {
+            let activity = activityMap.get(vote);
+            let newActivity = {};
+            let newVotes = activity.votes;
+            if (activity.votes.length + 1 >= activity.min) {
+                newActivity = {
                     ...activity,
                     selected: true,
-                    votes: activity.votes.push(currentUser.uid)
+                    votes: [...newVotes, currentUser.uid]
                 };
-                decidedParticipants = activity.votes;
+                decidedParticipants = newActivity.votes;
+                newActivities.set(vote, newActivity);
                 break;
             } else {
-                activity = {
+                newActivity = {
                     ...activity,
-                    votes: activity.votes.push(currentUser.uid)
+                    selected: false,
+                    votes: [...newVotes, currentUser.uid]
                 };
             }
-            newActivities.set(vote, activity);
+            newActivities.set(vote, newActivity);
         }
 
         // Remove if decided
         if (decidedParticipants.length > 0) {
-            const cleanActivities = newActivities; //rename variable?
-            for (const [id, activity] in cleanActivities) {
-                let newVotes = activity.votes.filter((vote) => {
-                    return !decidedParticipants.includes(vote);
-                });
-                let newActivity = {
-                    ...activity,
-                    votes: newVotes
-                };
-                newActivities.set(id, newActivity);
+            const cleanActivities = new Map(newActivities); //rename variable?
+            for (const [id, activity] of cleanActivities) {
+                if(!activity.selected){
+                    let newVotes = activity.votes.filter((vote) => {
+                        return !decidedParticipants.includes(vote);
+                    });
+                    let newActivity = {
+                        ...activity,
+                        votes: newVotes
+                    };
+                    newActivities.set(id, newActivity);
+                }
             }
         }
 
         // Update data
         for (const [id, activity] of newActivities) {
-            await updateDoc(collection(db, "Clubs", clubID, "Meetings", meetingID, "Activities", id), {
+            const docRef = doc(db, "Clubs", clubID, "Meetings", meetingID, "Activities", id);
+            await updateDoc(docRef, {
                 minPlayers: activity.min,
                 maxPlayers: activity.max,
                 selected: activity.selected,
@@ -162,7 +170,7 @@ function Vote() {
         }
 
         // Navigate back to ActivityList
-        navigate(`/Homepage/Clubs/${clubID}/${meetingID}/ActivityList`);
+        navigate("../ActivityList", { relative: 'path', state: {meetingID: meetingID, clubID: clubID}})
     }
 
     return (
