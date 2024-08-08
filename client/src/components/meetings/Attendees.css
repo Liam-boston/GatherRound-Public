@@ -1,6 +1,7 @@
 .options-wrapper {
     position: relative;
     width: 200px;
+    max-height: 400px;
     background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px); /* Blur effect for background */

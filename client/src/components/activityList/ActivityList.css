@@ -22,6 +22,7 @@
 .activity-wrapper {
     position: relative;
     width: 650px;
+    max-height: 475px;
     background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px); /* Blur effect for background */
