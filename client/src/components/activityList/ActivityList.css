@@ -1,27 +1,43 @@
+.activity-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
 .header {
-    text-align: center; /* Center align content within header */
-    margin-bottom: 20px; /* Adjust spacing between header and homepage-wrapper */
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .header h1 {
     font-size: 70px;
     color: #fff;
     padding: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example shadow size and color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin: 0;
-  }
-  
-  .header p {
+}
+
+.header p {
     font-size: 24px;
     color: #fff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Example shadow size and color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     margin-top: -30px;
     margin-bottom: 10px;
-  }
-  
-  .activity-list-wrapper {
-    position: relative;
-    width: 650px; /* Ensure this is the desired width */
+}
+
+.wrapper-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+.activity-list-wrapper {
+    width: 650px;
+    height: 500px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px);
@@ -34,25 +50,81 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    margin: 0 auto; /* Center horizontally within parent container */
+    box-sizing: border-box;
 }
 
-.scrollable-list {
+.voting-instructions {
+    width: 500px;
+    height: 380px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    color: #fff; /* White text color */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 10px; /* Reduce padding */
+    /* box-sizing: border-box; */
+    min-height: 120px; /* Adjust to fit content */
+}
+
+.voting-instructions-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px; /* Adjust margin */
+    margin-top: 20px;
+}
+
+.voting-instructions ul {
+    list-style-type: disc; /* Display bullet points */
+    padding-left: 20px; /* Add padding for left alignment */
+    margin: 0;
+    color: white; /* White color for text */
+    text-align: left; /* Left-align text */
+}
+
+.voting-instructions li {
+    margin-bottom: 10px; /* Space between list items */
+}
+
+.vote-button {
+    width: 150px; /* Adjust width to make button compact */
+    height: 40px; /* Adjust height to make button compact */
+    background: #186e3c;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 14px; /* Adjust font size */
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    line-height: 40px; /* Adjust line height */
+    margin-top: 10px; /* Adjust margin */
+}
+
+.scrollable-activity-list {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     min-height: 200px;
-    max-height: 475px; /* Adjust this height to show only the first 4 elements */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    max-height: 475px;
+    overflow-y: auto;
     margin-bottom: 15px;
     margin-top: 15px;
 }
 
 .activity-button {
     display: flex;
-    flex-direction: column; /* Stack details vertically */
-    align-items: flex-start; /* Align items to the left */
+    flex-direction: column;
+    align-items: flex-start;
     background-color: #d3d3d3;
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px);
@@ -66,21 +138,21 @@
     cursor: pointer;
     width: 100%;
     box-sizing: border-box;
-    text-align: left; /* Align text to the left */
+    text-align: left;
     transition: background-color 0.3s ease;
 }
 
 .activity-details {
     display: flex;
-    flex-direction: column; /* Stack details vertically */
-    width: 100%; /* Ensure full width */
+    flex-direction: column;
+    width: 100%;
 }
 
 .activity-name-container {
     display: flex;
-    align-items: center; /* Center align items vertically */
-    justify-content: space-between; /* Space out name and info */
-    width: 100%; /* Ensure full width */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .activity-name {
@@ -92,13 +164,13 @@
 .activity-information {
     font-size: 14px;
     color: #666;
-    text-align: right; /* Align text to the right */
+    text-align: right;
 }
 
 .activity-description {
     font-size: 14px;
     color: #888;
-    margin-top: 5px; /* Space between info and description */
+    margin-top: 5px;
 }
 
 .message {
@@ -109,28 +181,11 @@
 }
 
 .message.success {
-    color: #186e3c; /* Green color */
-    background-color: #d4edda; /* Light green background */
+    color: #186e3c;
+    background-color: #d4edda;
 }
 
 .message.error {
-    color: #d9534f; /* Red color */
-    background-color: #f8d7da; /* Light red background */
-}
-
-.vote-button {
-    width: 200px;
-    height: 45px;
-    background: #186e3c;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 700;
-    margin-top: 20px;
-    text-align: center;
-    line-height: 45px;
+    color: #d9534f;
+    background-color: #f8d7da;
 }
