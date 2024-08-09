@@ -18,12 +18,12 @@ function Meetings() {
     const [member, setMember] = useState({});
     const [attendee, setAttendee] = useState();
     const [RSVPClicked, setRSVPClicked] = useState(null);
-    const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
+    const [showUserProfileModal, setShowUserProfileModal] = useState(false);
     const [userData, setUserData] = useState(null);
     const { id } = useParams();
     const { clubID, currentUserID } = state;
-    const docRef = doc(db, "Clubs", clubID, "Meetings", id);
-    const docRef2 = doc(db, "Clubs", clubID, "Members", currentUserID);
+    const meetingRef = doc(db, "Clubs", clubID, "Meetings", id);
+    const userRef = doc(db, "Clubs", clubID, "Members", currentUserID);
 
 
     // Fetch the current user from Firebase Auth
@@ -43,38 +43,37 @@ function Meetings() {
 
 
     // Fetch current Meeting from Firestore
-    useEffect(() => {
-        const fetchMeeting = async () => {
-            try {
-                const tempData = await getDoc(docRef); // Fetch the Meeting
-                setMeeting(tempData.data()); // Update state with fetched meeting
-                console.log(meeting);
-            } catch (error) {
-                console.error("Error fetching meeting: ", error);
-            }
-        };
+    const fetchMeeting = async () => {
+        try {
+            const tempData = await getDoc(meetingRef); // Fetch the Meeting
+            setMeeting(tempData.data()); // Update state with fetched meeting
+            console.log(meeting);
+        } catch (error) {
+            console.error("Error fetching meeting: ", error);
+        }
+    };
 
+    useEffect(() => {
         fetchMeeting(); // Call fetchMeeting when component mounts or currentUser changes
-    }, [currentUser]);
+    }, []);
 
     // Fetch current user from Firestore
-    useEffect(() => {
-        const fetchMember = async () => {
-            try {
-                const tempData = await getDoc(docRef2); 
-                setMember(tempData.data()); 
-                console.log(member);
-            } catch (error) {
-                console.error("Error fetching current user: ", error);
-            }
-        };
+    
+    const fetchMember = async () => {
+        try {
+            const tempData = await getDoc(userRef); 
+            setMember(tempData.data()); 
+            console.log(member);
+        } catch (error) {
+            console.error("Error fetching current user: ", error);
+        }
+    };
 
+    useEffect(() => {
         fetchMember(); 
-    }, [currentUser]);
+    }, []);
 
-
-    // Fetch attendee status from Firestore
-    useEffect(() => {
+    // Fetch attendee status from Firestore  
         const attendeeCheck = async () => {
             // Reference to the Firestore document
             const docRef4 = doc(db, "Clubs", clubID, "Meetings", id, "Attendees", currentUserID);
@@ -87,11 +86,13 @@ function Meetings() {
             } catch (error) {
                 console.log("Error attendeeCheck ", error);
             }
-        }
+        };
 
-
+    useEffect(() => {
         attendeeCheck(); 
-    }, [RSVPClicked]);
+    }, []);
+
+
 
     const handleRSVPClick = async (e) => {
         e.preventDefault(); 
@@ -139,6 +140,7 @@ function Meetings() {
         return <Navigate to="/" />;
     }
 
+
     return (
         <div>
              <ProfileButton onClick={viewUserProfileModal} />
@@ -150,7 +152,8 @@ function Meetings() {
                                 {/* Main wrapper for the options */}
                                 <div className='options-list'>
                                     {/* List of options*/}
-                                        <button type="button" disabled={!attendee} onClick={(e) => navigate("ActivityList", { state: {meetingID: id, clubID: clubID}})}  className='options'>List of Activities</button>  
+                                        <button type="button" disabled={!attendee} onClick={(e) => navigate("ActivityList", { state: {meetingID: id, clubID: clubID}})} className='options'>List of Activities</button>  
+                                        <button type="button" disabled={!attendee} onClick={(e) => navigate("Vote", { state: {meetingID: id, clubID: clubID}})} className='options'>Vote</button>
                                         <button type="button" onClick={(e) => navigate(-1)}  className='options'>Return to Club</button>    
                                 </div>
                         </div>

@@ -28,6 +28,7 @@ const CreateActivityModal = ({ show, onClose, setMessage, currentUser, clubID })
             votes: [], // Initialize an empty voters list
             minPlayers: activityMinPlayers,
             maxPlayers: activityMaxPlayers,
+            selected: false,
             createdAt: new Date() // Set the creation date 
         };
 

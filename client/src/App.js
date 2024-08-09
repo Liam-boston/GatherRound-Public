@@ -8,9 +8,10 @@ import LoginSignup from './components/auth/LoginSignup'
 import EmailVerification from "./components/auth/EmailVerification";
 import Homepage from "./components/homepage/Homepage";
 import ClubDetails from "./components/clubs/ClubDetails";
-import MemberList from "./components/MemberList/MemberList";
+import MemberList from "./components/memberList/MemberList";
 import ActivityList from "./components/activityList/ActivityList";
 import Meetings from "./components/meetings/Meetings";
+import Vote from './components/voting/Vote';
 
 class App extends React.Component {
 
@@ -46,6 +47,7 @@ class App extends React.Component {
             <Route path="/Homepage/Clubs/:id" element={<PrivateRoute><ClubDetails/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/:id/MemberList" element={<PrivateRoute><MemberList/></PrivateRoute>}/>
             <Route path="/Homepage/Clubs/:id/:id/ActivityList" element={<PrivateRoute><ActivityList/></PrivateRoute>}/>
+            <Route path="/Homepage/Clubs/:id/:id/Vote" element={<PrivateRoute><Vote /></PrivateRoute>} />
             <Route path="/Homepage/Clubs/:id/:id" element={<PrivateRoute><Meetings/></PrivateRoute>}/>
             <Route path="*" element={<p>There's nothing here: 404!</p>}/>
           </Routes>

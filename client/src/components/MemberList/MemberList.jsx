@@ -5,7 +5,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { auth } from "../../services/firebase"
 import { signOut, getAuth } from 'firebase/auth';
-import InviteModal from "../MemberList/InviteModal";
+import InviteModal from "../memberList/InviteModal";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import UserProfileModal from "../common/UserProfileModal";
 
@@ -21,6 +21,19 @@ function MemberList() {
     const { id } = useParams();
     const docRef = doc(db, "Clubs", id);
 
+    // Check if the current user is an admin
+    const checkAdminStatus = async (userId) => {
+        try {
+            const memberDocRef = doc(db, "Clubs", id, "Members", userId);
+            const memberDoc = await getDoc(memberDocRef);
+            if (memberDoc.exists()) {
+                setIsAdmin(memberDoc.data().admin);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     // Fetch the current user from Firebase Auth
     useEffect(() => {
         const auth = getAuth();
@@ -35,20 +48,7 @@ function MemberList() {
 
         // Clean up the subscription on unmount
         return () => unsubscribe();
-    }, []);
-
-    // Check if the current user is an admin
-    const checkAdminStatus = async (userId) => {
-        try {
-            const memberDocRef = doc(db, "Clubs", id, "Members", userId);
-            const memberDoc = await getDoc(memberDocRef);
-            if (memberDoc.exists()) {
-                setIsAdmin(memberDoc.data().admin);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    }, [checkAdminStatus]);
 
     // Fetch the members array from the current Club and the club name
     useEffect(() => {
