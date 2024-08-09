@@ -58,7 +58,6 @@ function Meetings() {
     }, []);
 
     // Fetch current user from Firestore
-    
     const fetchMember = async () => {
         try {
             const tempData = await getDoc(userRef); 
@@ -90,7 +89,7 @@ function Meetings() {
 
     useEffect(() => {
         attendeeCheck(); 
-    }, []);
+    }, [RSVPClicked]);
 
 
 
