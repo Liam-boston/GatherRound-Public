@@ -18,6 +18,7 @@ function ActivityList() {
   const [activities, setActivities] = useState([]); // State to hold the list of clubs stored in Firestore
   const [showUserProfileModal, setShowUserProfileModal] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [attendees, setAttendees] = useState([]);
   const { state } = useLocation();
   const { meetingID, clubID } = state;
 
@@ -57,6 +58,25 @@ function ActivityList() {
 
     fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
   }, [currentUser]);
+
+  // Get attendees
+  useEffect(() => {
+    const getMembers = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, 'Clubs', clubID, "Meetings", meetingID, "Attendees")); 
+            const attendeesList = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setAttendees(attendeesList); // Update state with fetched clubs
+        } catch (error) {
+            console.error("Error fetching clubs: ", error);
+        }
+    };
+
+    getMembers(); 
+    console.log(attendees)
+}, []);
 
   // Function to handle showing the modal
   const viewModal = () => {
@@ -133,7 +153,7 @@ function ActivityList() {
         <div className="activity-list-wrapper1">
           <div className="scrollable-activity-list1">
             {activities.map((activity, index) => (
-              <button onClick={(e) => null} key={index} className="activity-button1">
+              <button onClick={null} key={index} className="activity-button1">
                 <div className="activity-details1">
                   <div className="activity-name-container1">
                     <div className="activity-name1">{activity.name}</div>
@@ -143,6 +163,12 @@ function ActivityList() {
                   </div>
                   <div className="activity-description1">
                     {activity.description}
+                  </div>
+                  <div className="activity-participants" hidden={!activity.selected}>
+                    Participants: {activity.selected ? 
+                    activity.votes.map(vote => {
+                      return attendees.find(attendee => attendee.id === vote).name
+                    }).join(", ") : ""}        
                   </div>
                 </div>
               </button>

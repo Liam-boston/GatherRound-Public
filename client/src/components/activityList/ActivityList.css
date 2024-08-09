@@ -173,6 +173,12 @@
     margin-top: 5px;
 }
 
+.activity-participants {
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
+}
+
 .message {
     margin-bottom: 20px;
     padding: 10px;
