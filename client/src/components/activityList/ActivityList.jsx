@@ -21,6 +21,7 @@ function ActivityList() {
   const [attendees, setAttendees] = useState([]);
   const { state } = useLocation();
   const { meetingID, clubID } = state;
+  const tempArray = [];
 
 
   // Fetch the current user from Firebase Auth
@@ -139,6 +140,21 @@ function ActivityList() {
     });
   };
 
+  // Handle Participants
+  const handleParticipants = (activity) => {
+    try{
+      if(activity.selected ){
+        return activity.votes.map(vote => {
+          return attendees.find(attendee => attendee.id === vote).name;
+        }).join(", ");
+      }else{
+        return "";
+      }
+    }catch(err){
+      return "";
+    }
+  }
+
   return (
     <div className="activity-list-container1">
       <ProfileButton onClick={viewUserProfileModal} />
@@ -171,10 +187,7 @@ function ActivityList() {
                     {activity.description}
                   </div>
                   <div className="activity-participants" hidden={!activity.selected}>
-                    Participants: {activity.selected ? 
-                    activity.votes.map(vote => {
-                      return attendees.find(attendee => attendee.id === vote).name;
-                    }).join(", ") : ""}        
+                    Participants: {handleParticipants(activity)}        
                   </div>
                 </div>
               </button>
