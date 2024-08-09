@@ -150,9 +150,9 @@ function ClubDetails() {
                                     <button type="button" onClick={handleLeaveClub}  className='options'>Leave Club</button>  
                             </div>
                     </div>
-                        <div className='activity-wrapper'>
+                        <div className='clubDetails-wrapper'>
                             {/* Main wrapper for the meeting messages */}
-                            <div className='clubDetails-list'>
+                            <div className='meetingNames-list'>
                                 {/* Scrollable list of meeting messages*/}
                                 {meetings.map((meeting, index) => (
                                  <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id, currentUserID: currentUser.uid}})} key={index}  className='options'>{meeting.name}</button>  

@@ -1,4 +1,4 @@
-.activity-list-container {
+.activity-list-container1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,24 +27,24 @@
     margin-bottom: 10px;
 }
 
-.wrapper-container {
+.wrapper-container1 {
     display: flex;
     justify-content: space-between;
+    position: relative;
     width: 100%;
     max-width: 1200px;
     gap: 20px;
 }
 
-.activity-list-wrapper {
+.activity-list-wrapper1 {
     width: 650px;
-    max-height: 475px;
-    height: 500px;
+    max-height: 600px;
+    min-height: 200px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px);
     border-radius: 10px;
     color: #186e3c;
-    overflow: hidden;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -52,6 +52,15 @@
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
+}
+
+.scrollable-activity-list1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .voting-instructions {
@@ -110,19 +119,8 @@
     margin-top: 10px; /* Adjust margin */
 }
 
-.scrollable-activity-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: 200px;
-    max-height: 475px;
-    overflow-y: auto;
-    margin-bottom: 15px;
-    margin-top: 15px;
-}
 
-.activity-button {
+.activity-button1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -132,6 +130,7 @@
     border-radius: 10px;
     color: black;
     overflow: hidden;
+    overflow-y: auto;
     padding: 15px;
     margin: 5px 0;
     font-size: 18px;
@@ -143,32 +142,32 @@
     transition: background-color 0.3s ease;
 }
 
-.activity-details {
+.activity-details1 {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.activity-name-container {
+.activity-name-container1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
 
-.activity-name {
+.activity-name1 {
     font-size: 18px;
     font-weight: bold;
     color: #333;
 }
 
-.activity-information {
+.activity-information1 {
     font-size: 14px;
     color: #666;
     text-align: right;
 }
 
-.activity-description {
+.activity-description1 {
     font-size: 14px;
     color: #888;
     margin-top: 5px;

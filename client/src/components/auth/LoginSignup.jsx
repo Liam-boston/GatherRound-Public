@@ -1,6 +1,6 @@
 import './LoginSignup.css';
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Navigate, useNavigate } from 'react-router-dom';
+import { useSearchParams, Navigate} from 'react-router-dom';
 import { db } from "../../services/firebase"
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, getAuth, signOut } from 'firebase/auth';
@@ -35,7 +35,6 @@ const LoginSignup = () => {
     const [greetingMessage, setGreetingMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [goToEmailVerification, setGoToEmailVerification] = useState(false);
-    const navigate = useNavigate();
     const [goToHomepage, setGoToHomepage] = useState(false);
     const auth = getAuth();
 

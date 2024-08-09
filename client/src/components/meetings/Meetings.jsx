@@ -154,12 +154,12 @@ function Meetings() {
                                     {/* List of options*/}
                                         <button type="button" disabled={!attendee} onClick={(e) => navigate("ActivityList", { state: {meetingID: id, clubID: clubID}})} className='options'>List of Activities</button>  
                                         <button type="button" disabled={!attendee} onClick={(e) => navigate("Vote", { state: {meetingID: id, clubID: clubID}})} className='options'>Vote</button>
-                                        <button type="button" onClick={(e) => navigate(-1)}  className='options'>Return to Club</button>    
+                                        <button type="button" onClick={(e) => navigate(`/Homepage/Clubs/${clubID}`)}  className='options'>Return to Club</button>    
                                 </div>
                         </div>
                         <div className='meetings-wrapper'>
                             {/* Main wrapper for the meeting messages */}
-                            <div className='meetings-list'>    
+                            <div className='meetings-description'>    
                                 <button type="button" onClick={(e) => null }  className='options'>{meeting.description}</button>
                             </div>
                         </div>

@@ -45,7 +45,7 @@
 }
 
 /* Styling for scrollable-list */
-.scrollable-list {
+.members-scrollable-list {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -5,7 +5,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase"
 import { auth } from "../../services/firebase"
 import { signOut, getAuth } from 'firebase/auth';
-import InviteModal from "../memberList/InviteModal";
+import InviteModal from "../MemberList/InviteModal";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import UserProfileModal from "../common/UserProfileModal";
 
@@ -119,7 +119,7 @@ function MemberList() {
                     <button onClick={() => navigate(-1)}>Back to Club Page</button>
                 </div>
                 <div className='member-list-wrapper'>
-                    <div className='scrollable-list'>
+                    <div className='members-scrollable-list'>
                         {member.length > 0 ? (
                             member.map((member, index) => (
                                 <button onClick={() => null} key={index} className='member-button'>

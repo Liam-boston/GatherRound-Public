@@ -21,6 +21,7 @@ function ActivityList() {
   const { state } = useLocation();
   const { meetingID, clubID } = state;
 
+  
   // Fetch the current user from Firebase Auth
   useEffect(() => {
     const auth = getAuth();
@@ -119,7 +120,7 @@ function ActivityList() {
   };
 
   return (
-    <div className="activity-list-container">
+    <div className="activity-list-container1">
       <ProfileButton onClick={viewUserProfileModal} />
       <div className="header">
         <h1>{meetingID}</h1>
@@ -128,25 +129,19 @@ function ActivityList() {
       </div>
 
       {/* Wrapper container for activity list and voting instructions */}
-      <div className="wrapper-container">
-        <div className="activity-list-wrapper">
-          <div className="scrollable-activity-list">
+      <div className="wrapper-container1">
+        <div className="activity-list-wrapper1">
+          <div className="scrollable-activity-list1">
             {activities.map((activity, index) => (
-              <button
-                onClick={(e) => null}
-                key={index}
-                className="activity-button"
-              >
-                <div className="activity-details">
-                  <div className="activity-name-container">
-                    <div className="activity-name">{activity.name}</div>
-                    <div className="activity-information">
-                      Players: {activity.minPlayers === activity.maxPlayers
-                        ? activity.minPlayers
-                        : `${activity.minPlayers}-${activity.maxPlayers}`}
+              <button onClick={(e) => null} key={index} className="activity-button1">
+                <div className="activity-details1">
+                  <div className="activity-name-container1">
+                    <div className="activity-name1">{activity.name}</div>
+                    <div className="activity-information1">
+                      Players: {activity.minPlayers === activity.maxPlayers ? activity.minPlayers: `${activity.minPlayers}-${activity.maxPlayers}`}
                     </div>
                   </div>
-                  <div className="activity-description">
+                  <div className="activity-description1">
                     {activity.description}
                   </div>
                 </div>

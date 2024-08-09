@@ -24,16 +24,16 @@
     padding: 20px; /* Add some padding for aesthetics */
 }
 
-.activity-wrapper {
+.clubDetails-wrapper {
     position: relative;
     width: 900px;
     max-height: 400px;
+    min-height: 350px;
     background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px); /* Blur effect for background */
     border-radius: 10px;
     color: #000000; /* Darker green color */
-    overflow: hidden; /* Ensure content doesn't overflow the container */
     overflow-y: auto; /* Enable vertical scrolling if needed */
     display: flex;
     flex-direction: column; /* Stack form-boxes vertically */
@@ -42,15 +42,12 @@
     padding: 20px; /* Add some padding for aesthetics */
 }
 
-.clubDetails-list {
+.meetingNames-list {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     width: 100%;
-    min-height: 250px;
-    max-height: 475px; /* Adjust this height to show only the first 4 elements */
     overflow-y: auto; /* Enable vertical scrolling if needed */
-    overflow: hidden; /* Ensure content doesn't overflow the container */
     margin-bottom: 5px;
     margin-top: 5px;
 }
