@@ -38,7 +38,7 @@
 
 .activity-list-wrapper1 {
     width: 650px;
-    max-height: 600px;
+    max-height: 525px;
     min-height: 200px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -49,8 +49,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
 }
 
@@ -116,7 +115,7 @@
     font-weight: 700;
     text-align: center;
     line-height: 40px; /* Adjust line height */
-    margin-top: 10px; /* Adjust margin */
+    margin-top: 5px; /* Adjust margin */
 }
 
 
@@ -162,9 +161,20 @@
 }
 
 .activity-information1 {
+    font-style: bold;
     font-size: 14px;
     color: #666;
-    text-align: right;
+    text-align: left; /* Align text to the left */
+    margin-top: 5px; /* Add some space from the elements above */
+    width: 100%; /* Take full width to align with other elements */
+}
+
+.activity-status1 {
+    font-size: 14px;
+    color: #444;
+    text-align: right; /* Align text to the right */
+    white-space: nowrap; /* Prevent text from wrapping */
+    margin-left: auto; /* Push the status to the right */
 }
 
 .activity-description1 {
