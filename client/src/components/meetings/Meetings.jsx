@@ -157,9 +157,9 @@ function Meetings() {
                                         <button type="button" onClick={(e) => navigate(-1)}  className='options'>Return to Club</button>    
                                 </div>
                         </div>
-                        <div className='activity-wrapper'>
+                        <div className='meetings-wrapper'>
                             {/* Main wrapper for the meeting messages */}
-                            <div className='messages-list'>    
+                            <div className='meetings-list'>    
                                 <button type="button" onClick={(e) => null }  className='options'>{meeting.description}</button>
                             </div>
                         </div>

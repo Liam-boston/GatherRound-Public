@@ -29,6 +29,7 @@
 
 .member-list-wrapper {
     width: 650px;
+    max-height: 475px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px);
