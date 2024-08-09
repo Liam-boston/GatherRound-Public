@@ -173,7 +173,7 @@ function ActivityList() {
                   <div className="activity-participants" hidden={!activity.selected}>
                     Participants: {activity.selected ? 
                     activity.votes.map(vote => {
-                      return attendees.find(attendee => attendee.id === vote).name
+                      return attendees.find(attendee => attendee.id === vote).name;
                     }).join(", ") : ""}        
                   </div>
                 </div>
