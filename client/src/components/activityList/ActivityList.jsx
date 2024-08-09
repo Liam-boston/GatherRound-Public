@@ -22,7 +22,7 @@ function ActivityList() {
   const { state } = useLocation();
   const { meetingID, clubID } = state;
 
-  
+
   // Fetch the current user from Firebase Auth
   useEffect(() => {
     const auth = getAuth();
@@ -129,7 +129,7 @@ function ActivityList() {
     navigate(`/Homepage/Clubs/${clubID}/${meetingID}/Vote`, {
       state: { meetingID, clubID }
     });
-  };  
+  };
 
   // Funciton to navigate to the Meeting page
   const handleMeetingClick = () => {
@@ -157,9 +157,15 @@ function ActivityList() {
                 <div className="activity-details1">
                   <div className="activity-name-container1">
                     <div className="activity-name1">{activity.name}</div>
-                    <div className="activity-information1">
-                      Players: {activity.minPlayers === activity.maxPlayers ? activity.minPlayers: `${activity.minPlayers}-${activity.maxPlayers}`}
+                    <div className="activity-status1">
+                      Status:
+                      <span className={`is-selected ${activity.selected ? 'active' : 'is-not-selected'}`}>
+                        {activity.selected ? ' Selected' : ' Not Selected'}
+                      </span>
                     </div>
+                  </div>
+                  <div className="activity-information1">
+                    Players: {activity.minPlayers === activity.maxPlayers ? activity.minPlayers : `${activity.minPlayers}-${activity.maxPlayers}`}
                   </div>
                   <div className="activity-description1">
                     {activity.description}

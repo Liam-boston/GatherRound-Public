@@ -37,6 +37,7 @@
     color: #186e3c;
     overflow: hidden;
     display: flex;
+    overflow-y: auto;
     flex-direction: column;
     align-items: center;
     padding: 20px;
@@ -50,7 +51,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-height: calc(100vh - 650px);
+    min-height: 200px;
     max-height: 475px;
     overflow-y: auto;
     margin-bottom: 10px;

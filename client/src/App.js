@@ -57,7 +57,7 @@ class App extends React.Component {
   }
 }
 
-
+//Priavte Router to prevent unauthorized access
 const PrivateRoute = ({children}) => {
   const [user, setUser] = useState({});
 
