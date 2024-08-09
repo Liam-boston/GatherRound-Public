@@ -58,7 +58,7 @@ function ActivityList() {
     };
 
     fetchActivities(); // Call fetchActivities when component mounts or currentUser changes
-  }, [currentUser]);
+  }, [currentUser, showModal]);
 
   // Get attendees
   useEffect(() => {
