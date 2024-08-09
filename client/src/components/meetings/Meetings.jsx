@@ -92,7 +92,7 @@ function Meetings() {
     }, [RSVPClicked]);
 
 
-
+    //Function to handle adding users to Attendees if they press the RSVP button
     const handleRSVPClick = async (e) => {
         e.preventDefault(); 
         const data = {
@@ -112,6 +112,7 @@ function Meetings() {
         setRSVPClicked(true);
     }
 
+    //Function to handle viewing the profile modal
     const viewUserProfileModal = () => {
         const docRef = doc(db, 'Users', currentUser.uid);
         if (!userData) {
@@ -130,6 +131,7 @@ function Meetings() {
         setShowUserProfileModal(true);
     }
 
+    //Function to handle closing the profile modal
     const closeUserProfileModal = () => {
         setShowUserProfileModal(false);
     }

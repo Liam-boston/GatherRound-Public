@@ -73,7 +73,7 @@ function ClubDetails() {
         }
     };
 
-     //Function to handle viewing the profile modal
+    //Function to handle viewing the profile modal
     const viewUserProfileModal = () => {
         const docRef = doc(db, 'Users', currentUser.uid);
         if (!userData) {

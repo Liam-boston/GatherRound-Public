@@ -2,7 +2,7 @@ import "./Homepage.css";
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
 import { signOut, getAuth } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { auth, db } from "../../services/firebase";
 import ProfileButton from "../common/ProfileButton/ProfileButton";
 import CreateButton from "../common/CreateButton/CreateButton"; 
@@ -17,10 +17,10 @@ function Homepage() {
     const [userData, setUserData] = useState(null);
     const [showUserProfileModal, setShowUserProfileModal] = useState(false); 
     const [message, setMessage] = useState(null); 
-
     const navigate = useNavigate();
     const location = useLocation();
 
+    //Get current user
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -33,6 +33,7 @@ function Homepage() {
         return () => unsubscribe();
     }, []);
 
+    //Handles new user joining club
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const clubName = params.get("clubName");
@@ -86,7 +87,8 @@ function Homepage() {
     const closeCreateClubModal = () => {
         setShowCreateClubModal(false);
     }
-
+    
+    //Function to handle viewing the profile modal
     const viewUserProfileModal = () => {
         const docRef = doc(db, 'Users', currentUser.uid);
         if (!userData) {
@@ -104,7 +106,7 @@ function Homepage() {
 
         setShowUserProfileModal(true);
     }
-
+    //Function to handle closing the profile modal
     const closeUserProfileModal = () => {
         setShowUserProfileModal(false);
     }
@@ -113,7 +115,8 @@ function Homepage() {
         signOut(auth)
         return <Navigate to="/" />;
     }
-
+    
+    // Function to set the success or failure message
     const handleSetMessage = (newMessage) => {
         setMessage(newMessage);
         setTimeout(() => {
