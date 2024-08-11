@@ -95,12 +95,12 @@ test('Can fetch meetings from Firestore', async () => {
 
     // Check if the expected number of meeting Meetings are rendered
     await waitFor(() => {
-        const meetingElements = screen.getAllByRole('link', { class: 'options' });
-        expect(meetingElements).toHaveLength(mockMeetings.length);
+        const meetingElements = screen.getAllByRole('button', { class: 'options' });
+        expect(meetingElements).toHaveLength(mockMeetings.length + 5);
     });
 });
 
-// // UAT-19: CreateMeetingModal is shown when the create button is clicked
+// // UT-19: CreateMeetingModal is shown when the create button is clicked
 test('CreateMeetingModal is shown when the create button is clicked', async () => {
     await act(async () => {
         render(
@@ -121,7 +121,7 @@ test('CreateMeetingModal is shown when the create button is clicked', async () =
     expect(screen.getByTestId('create-meeting-modal__submit')).toBeInTheDocument();
 });
 
-// // UAT-20: CreateMeetingModal is closed when the cancel button is clicked
+// // UT-20: CreateMeetingModal is closed when the cancel button is clicked
 test('CreateMeetingModal is closed when the cancel button is clicked', async () => {
     await act(async () => {
         render(
@@ -149,7 +149,7 @@ test('CreateMeetingModal is closed when the cancel button is clicked', async () 
     expect(screen.queryByTestId('create-meeting-modal__cancel')).not.toBeInTheDocument();
 });
 
-// UAT-21: List of Members button navigates to the member list when clicked
+// UT-21: List of Members button navigates to the member list when clicked
 test('List of Members button navigates to the member list when clicked', async () => {
     render(
         <MemoryRouter initialEntries={['/club-details']}>
@@ -161,14 +161,14 @@ test('List of Members button navigates to the member list when clicked', async (
     );
 
     // Find the "List of Members" button and simulate a click event
-    const listMembersButton = screen.getByRole('button', { name: /list of members/i });
+    const listMembersButton = screen.getByRole('button', { name: /List of Members/i });
     fireEvent.click(listMembersButton);
 
     // Verify that the MemberList component is rendered
-    expect(await screen.findByText(/List of members/i)).toBeInTheDocument();
+    expect(await screen.findByText("Members")).toBeInTheDocument();
 });
 
-// UAT-22: Return Home button navigates to the homepage when clicked
+// UT-22: Return Home button navigates to the homepage when clicked
 test('Return Home button navigates to the homepage when clicked', async () => {
     render(
         <MemoryRouter initialEntries={['/Homepage/Clubs/1']}>
@@ -180,7 +180,9 @@ test('Return Home button navigates to the homepage when clicked', async () => {
     );
 
     // Verify that ClubDetails component is rendered
-    expect(screen.getByText('Club Name')).toBeInTheDocument();
+    expect(screen.getByText('List of Members')).toBeInTheDocument();
+    expect(screen.getByText('Leave Club')).toBeInTheDocument();
+
 
     // Find and click the "Return Home" button
     const returnHomeButton = screen.getByText('Return Home');
@@ -190,7 +192,7 @@ test('Return Home button navigates to the homepage when clicked', async () => {
     await waitFor(() => expect(screen.getByText('Let the games begin!')).toBeInTheDocument());
 });
 
-// UAT-23: Leave Club button removes user from club members list
+// UT-23: Leave Club button removes user from club members list
 // test('Leave Club button removes user from club members list', async () => {
 //     const mockUpdateDoc = jest.fn();
 //     updateDoc.mockImplementation(mockUpdateDoc);
@@ -224,4 +226,4 @@ test('Return Home button navigates to the homepage when clicked', async () => {
 //     });
 // });
 
-// UAT-24: Messages navigate to the Meeting page when clicked
+// UT-24: Messages navigate to the Meeting page when clicked

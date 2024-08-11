@@ -14,7 +14,7 @@ const mockUser = {
     email: 'john.doe@example.com'
 }
 
-// UAT-13: CreateClubModal successfully adds a new club document to Firestore
+// UT-13: CreateClubModal successfully adds a new club document to Firestore
 test('CreateClubModal successfully adds a new club document to Firestore', async () => {
     render(<CreateClubModal show={true} onClose={() => { }} setMessage={() => { }} currentUser={{ uid: '123' }} />);
 

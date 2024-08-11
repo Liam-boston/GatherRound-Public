@@ -155,7 +155,7 @@ function ClubDetails() {
                             <div className='meetingNames-list'>
                                 {/* Scrollable list of meeting messages*/}
                                 {meetings.map((meeting, index) => (
-                                 <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id, currentUserID: currentUser.uid}})} key={index}  className='options'>{meeting.name}</button>  
+                                 <button type="button" onClick={(e) => navigate(`${meeting.name}`, { state: {clubID: id, currentUserID: currentUser.uid}})} key={index}  className='meetings'>{meeting.name}</button>  
                                 ))}
                             </div>
                             {/* Display the success or failure message upon meeting creation */}

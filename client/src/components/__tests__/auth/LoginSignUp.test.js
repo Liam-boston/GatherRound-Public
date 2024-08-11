@@ -4,6 +4,7 @@ import { afterEach } from "@jest/globals";
 import '@testing-library/jest-dom/extend-expect';
 import LoginSignup from "../../auth/LoginSignup";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 jest.mock('firebase/auth', () => require('../../../../__mocks__/firebase'))
 
@@ -13,9 +14,15 @@ describe('Login', () => {
         cleanup();
     });
 
-    //UT-7: Able to fill out login
+    // UT-7: Able to fill out login
     test('should log in', () => {
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.change(getByTestId('login-email'), {target: {value: 'test@mail.com'}});
         fireEvent.change(getByTestId('login-password'), {target: {value: 'Abcdefgh123!'}});
@@ -33,9 +40,15 @@ describe('Signup', () => {
         jest.clearAllMocks();
     });
 
-    //UT-1: Able to sign up
+    // UT-1: Able to sign up
     test('should sign up', () => {
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -51,7 +64,13 @@ describe('Signup', () => {
 
     // UT-2: Unable to sign up with invalid email
     test('should alert invalid email', () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -68,7 +87,13 @@ describe('Signup', () => {
 
     // UT-4.1: Unable to sign up with invalid password (too short)
     test('should alert invalid password (too short)', () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -85,7 +110,13 @@ describe('Signup', () => {
 
     // UT-4.2: Unable to sign up with invalid password (too long)
     test('should alert invalid password (too long)',  () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -102,7 +133,13 @@ describe('Signup', () => {
 
      // UT-4.3: Unable to sign up with invalid password (no special character)
      test('should alert invalid password (no special character)', () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -119,7 +156,13 @@ describe('Signup', () => {
 
     // UT-4.4: Unable to sign up with invalid password (no capital letter)
     test('should alert invalid password (no capital letter)', () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -136,7 +179,13 @@ describe('Signup', () => {
 
     // UT-4.5: Unable to sign up with invalid password (no lowercase letter)
     test('should alert invalid password (no lowercase letter)', () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -153,7 +202,13 @@ describe('Signup', () => {
 
     // UT-4.6: Unable to sign up with invalid password (no number)
     test('should alert invalid password (no number)', () => { 
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
@@ -170,7 +225,13 @@ describe('Signup', () => {
 
     // UT-5: Unable to sign up with non-matching passwords
     test('should alert non-matching passwords', async () => {
-        const { getByTestId } = render(<LoginSignup/>);
+        const { getByTestId } = render(
+        <MemoryRouter>
+            <Routes>
+                <Route path="/" element={<LoginSignup />} />
+            </Routes>
+        </MemoryRouter>
+        );
 
         fireEvent.click(getByTestId('signup-switch'));
         
